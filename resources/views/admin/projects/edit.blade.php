@@ -21,7 +21,7 @@
             <h5 class="card-title mb-0">Modifier un projet</h5>
         </div>
         <div class="card-body">
-            <form action="{{ route('admin.projects.update', $project->id) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.projects.update', $project->id) }}" method="POST" enctype="multipart/form-data" id="projectForm">
                 @csrf
                 @method('PUT')
                 
@@ -63,8 +63,10 @@
 
                         <div class="mb-3">
                             <label for="description" class="form-label">Description détaillée <span class="text-danger">*</span></label>
-                            <textarea class="form-control @error('description') is-invalid @enderror" 
-                                id="description" name="description" rows="10" required>{{ old('description', $project->description) }}</textarea>
+                            <input type="hidden" name="description" id="description_input">
+                            <div id="description_editor" class="editor-container @error('description') is-invalid @enderror">
+                                {!! old('description', $project->description) !!}
+                            </div>
                             @error('description')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -116,22 +118,13 @@
 @section('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialisation de l'éditeur TinyMCE pour la description détaillée
-    if (typeof tinymce !== 'undefined') {
-        tinymce.init({
-            selector: '#description',
-            height: 400,
-            menubar: false,
-            plugins: [
-                'advlist autolink lists link image charmap print preview anchor',
-                'searchreplace visualblocks code fullscreen',
-                'insertdatetime media table paste code help wordcount'
-            ],
-            toolbar: 'undo redo | formatselect | bold italic backcolor | \
-                alignleft aligncenter alignright alignjustify | \
-                bullist numlist outdent indent | removeformat | help'
-        });
-    }
+    // Initialisation de l'éditeur Quill pour la description détaillée
+    const descriptionEditor = initQuillEditor('#description_editor', 'Entrez la description détaillée...');
+    
+    // Mise à jour du champ caché avant la soumission du formulaire
+    document.getElementById('projectForm').addEventListener('submit', function() {
+        document.getElementById('description_input').value = descriptionEditor.root.innerHTML;
+    });
 
     // Prévisualisation de l'image
     const imageInput = document.getElementById('image');

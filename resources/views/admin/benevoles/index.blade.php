@@ -18,9 +18,6 @@
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="card-title mb-0">Liste des bénévoles</h5>
-            <a href="{{ route('admin.benevoles.create') }}" class="btn btn-primary">
-                <i class="fas fa-plus-circle me-2"></i>Ajouter un bénévole
-            </a>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -45,9 +42,6 @@
                                 <td>{{ $benevole->created_at->format('d/m/Y') }}</td>
                                 <td>
                                     <div class="btn-group" role="group">
-                                        <a href="{{ route('admin.benevoles.edit', $benevole) }}" class="btn btn-sm btn-primary" title="Modifier">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
                                         <form action="{{ route('admin.benevoles.destroy', $benevole) }}" method="POST" class="d-inline" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce bénévole ?');">
                                             @csrf
                                             @method('DELETE')

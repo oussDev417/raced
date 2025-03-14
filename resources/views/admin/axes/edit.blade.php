@@ -1,12 +1,12 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Modifier un axe stratégique')
+@section('title', 'Modifier une opportunité')
 
 @section('breadcrumb')
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Tableau de bord</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('admin.axes.index') }}">Axes stratégiques</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('admin.axes.index') }}">Opportunités</a></li>
         <li class="breadcrumb-item active" aria-current="page">Modifier</li>
     </ol>
 </nav>
@@ -18,10 +18,10 @@
 
     <div class="card">
         <div class="card-header">
-            <h5 class="card-title mb-0">Modifier un axe stratégique</h5>
+            <h5 class="card-title mb-0">Modifier une opportunité</h5>
         </div>
         <div class="card-body">
-            <form action="{{ route('admin.axes.update', $axis->id) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.axes.update', $axe->id) }}" method="POST" enctype="multipart/form-data" id="axeForm">
                 @csrf
                 @method('PUT')
                 
@@ -30,7 +30,7 @@
                         <div class="mb-3">
                             <label for="title" class="form-label">Titre <span class="text-danger">*</span></label>
                             <input type="text" class="form-control @error('title') is-invalid @enderror" 
-                                id="title" name="title" value="{{ old('title', $axis->title) }}" required>
+                                id="title" name="title" value="{{ old('title', $axe->title) }}" required>
                             @error('title')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -40,7 +40,7 @@
                             <label for="slug" class="form-label">Slug <span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <input type="text" class="form-control @error('slug') is-invalid @enderror" 
-                                    id="slug" name="slug" value="{{ old('slug', $axis->slug) }}" required>
+                                    id="slug" name="slug" value="{{ old('slug', $axe->slug) }}" required>
                                 <button class="btn btn-outline-secondary" type="button" id="regenerateSlug">
                                     <i class="fas fa-sync-alt"></i>
                                 </button>
@@ -54,7 +54,7 @@
                         <div class="mb-3">
                             <label for="short_description" class="form-label">Description courte <span class="text-danger">*</span></label>
                             <textarea class="form-control @error('short_description') is-invalid @enderror" 
-                                id="short_description" name="short_description" rows="3" required>{{ old('short_description', $axis->short_description) }}</textarea>
+                                id="short_description" name="short_description" rows="3" required>{{ old('short_description', $axe->short_description) }}</textarea>
                             @error('short_description')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -63,8 +63,10 @@
 
                         <div class="mb-3">
                             <label for="description" class="form-label">Description détaillée <span class="text-danger">*</span></label>
-                            <textarea class="form-control @error('description') is-invalid @enderror" 
-                                id="description" name="description" rows="10" required>{{ old('description', $axis->description) }}</textarea>
+                            <input type="hidden" name="description" id="description_input">
+                            <div id="description_editor" class="editor-container @error('description') is-invalid @enderror">
+                                {!! old('description', $axe->description) !!}
+                            </div>
                             @error('description')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -83,9 +85,9 @@
                         </div>
                         <div class="mb-3">
                             <div class="image-preview" style="max-width: 200px;">
-                                @if($axis->image)
-                                    <img id="preview" src="{{ asset($axis->image) }}" 
-                                         alt="{{ $axis->title }}" 
+                                @if($axe->image)
+                                    <img id="preview" src="{{ asset($axe->image) }}" 
+                                         alt="{{ $axe->title }}" 
                                          style="max-width: 100%;">
                                 @else
                                     <img id="preview" src="#" 
@@ -116,23 +118,13 @@
 @section('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialisation de l'éditeur TinyMCE pour la description détaillée
-    if (typeof tinymce !== 'undefined') {
-        tinymce.init({
-            selector: '#description',
-            height: 400,
-            menubar: false,
-            plugins: [
-                'advlist autolink lists link image charmap print preview anchor',
-                'searchreplace visualblocks code fullscreen',
-                'insertdatetime media table paste code help wordcount'
-            ],
-            toolbar: 'undo redo | formatselect | bold italic backcolor | \
-                alignleft aligncenter alignright alignjustify | \
-                bullist numlist outdent indent | removeformat | help'
-        });
-    }
-
+    // Initialisation de l'éditeur Quill pour la description détaillée
+    const descriptionEditor = initQuillEditor('#description_editor', 'Entrez la description détaillée...');
+    
+    // Mise à jour du champ caché avant la soumission du formulaire
+    document.getElementById('axeForm').addEventListener('submit', function() {
+        document.getElementById('description_input').value = descriptionEditor.root.innerHTML;
+    });
     // Prévisualisation de l'image
     const imageInput = document.getElementById('image');
     const previewImage = document.getElementById('preview');

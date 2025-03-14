@@ -26,23 +26,23 @@
         </div>
         <div class="card-body">
             <ul class="nav nav-tabs" id="settingsTabs" role="tablist">
-                <li class="nav-item text-black" role="presentation">
-                    <button class="nav-link active" id="general-tab" data-bs-toggle="tab" data-bs-target="#general" type="button" role="tab" aria-controls="general" aria-selected="true">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active text-dark" id="general-tab" data-bs-toggle="tab" data-bs-target="#general" type="button" role="tab" aria-controls="general" aria-selected="true">
                         <i class="fas fa-cog me-1"></i>Général
                     </button>
                 </li>
-                <li class="nav-item text-black" role="presentation">
-                    <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link text-dark border" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">
                         <i class="fas fa-address-book me-1"></i>Contact
                     </button>
                 </li>
-                <li class="nav-item text-black" role="presentation">
-                    <button class="nav-link" id="social-tab" data-bs-toggle="tab" data-bs-target="#social" type="button" role="tab" aria-controls="social" aria-selected="false">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link text-dark border" id="social-tab" data-bs-toggle="tab" data-bs-target="#social" type="button" role="tab" aria-controls="social" aria-selected="false">
                         <i class="fas fa-share-alt me-1"></i>Réseaux Sociaux
                     </button>
                 </li>
-                <li class="nav-item text-black" role="presentation">
-                    <button class="nav-link" id="seo-tab" data-bs-toggle="tab" data-bs-target="#seo" type="button" role="tab" aria-controls="seo" aria-selected="false">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link text-dark border" id="seo-tab" data-bs-toggle="tab" data-bs-target="#seo" type="button" role="tab" aria-controls="seo" aria-selected="false">
                         <i class="fas fa-search me-1"></i>SEO
                     </button>
                 </li>

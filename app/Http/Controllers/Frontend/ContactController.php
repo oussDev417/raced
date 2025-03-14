@@ -10,7 +10,7 @@ use App\Models\Contact;
 use App\Models\Setting;
 use App\Models\Partner;
 use Illuminate\Http\Request;
-
+use App\Models\Newsletter;
 class ContactController extends Controller
 {
     /**
@@ -72,5 +72,16 @@ class ContactController extends Controller
         // Rediriger avec un message de succès
         return redirect()->route('home')
             ->with('success', 'Votre demande de bénévolat a été envoyée avec succès. Nous vous contacterons prochainement.');
+    }
+
+    public function newsletter(Request $request)
+    {
+        $data = $request->validate([
+            'email' => 'required|email|unique:newsletters,email',
+        ]);
+
+        Newsletter::create($data);
+
+        return redirect()->back()->with('success', 'Vous avez été abonné à notre newsletter.');
     }
 }

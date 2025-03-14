@@ -1,15 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Axes stratégiques')
-
-@section('breadcrumb')
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Tableau de bord</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Axes stratégiques</li>
-    </ol>
-</nav>
-@endsection
+@section('title', 'Opportunités')
 
 @section('content')
 <div class="container-fluid">
@@ -17,9 +8,9 @@
 
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
-            <h5 class="card-title mb-0">Liste des axes stratégiques</h5>
+            <h5 class="card-title mb-0">Liste des opportunités</h5>
             <a href="{{ route('admin.axes.create') }}" class="btn btn-primary">
-                <i class="fas fa-plus me-2"></i>Ajouter un axe stratégique
+                <i class="fas fa-plus me-2"></i>Ajouter une opportunité
             </a>
         </div>
         <div class="card-body">
@@ -45,7 +36,7 @@
                             </td>
                             <td>
                                 @if($axis->image)
-                                    <img src="{{ asset($axis->image) }}" 
+                                    <img src="{{ asset('storage/axes/' . $axis->image) }}" 
                                         alt="{{ $axis->title }}" class="img-thumbnail" 
                                         style="max-width: 80px;">
                                 @else
@@ -58,7 +49,7 @@
                             <td>{{ Str::limit($axis->short_description, 100) }}</td>
                             <td>{{ $axis->created_at->format('d/m/Y') }}</td>
                             <td>
-                                <a href="{{ route('admin.axes.show', $axis->id) }}" 
+                                <a href="{{ route('axes.show', $axis->slug) }}" 
                                     class="btn btn-info btn-sm" title="Voir">
                                     <i class="fas fa-eye"></i>
                                 </a>

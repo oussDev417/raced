@@ -1,8 +1,8 @@
 <aside class="sidebar">
     <div class="sidebar-header">
         <a href="{{ route('admin.dashboard') }}" class="logo">
-            <img src="{{ asset('assets/images/logo.png') }}" alt="CJ AONG" class="logo-img">
-            <span class="logo-text">CJ AONG</span>
+            <img src="{{ asset('assets/images/logo.png') }}" alt="RAONG" class="logo-img">
+            <span class="logo-text">RACED ONG</span>
         </a>
         <button class="sidebar-close d-md-none">
             <i class="fas fa-times"></i>
@@ -39,6 +39,13 @@
                 </a>
             </li>
             
+            <li class="nav-item {{ request()->routeIs('admin.newsletters.*') ? 'active' : '' }}">
+                <a href="{{ route('admin.newsletters.index') }}" class="nav-link">
+                    <i class="fas fa-envelope"></i>
+                    <span>Newsletters</span>
+                </a>
+            </li>
+            
             <li class="nav-item {{ request()->routeIs('admin.benevoles.*') ? 'active' : '' }}">
                 <a href="{{ route('admin.benevoles.index') }}" class="nav-link">
                     <i class="fas fa-hands-helping"></i>
@@ -60,19 +67,26 @@
                 </a>
             </li>
             
+            <li class="nav-item {{ request()->routeIs('admin.testimonials.*') ? 'active' : '' }}">
+                <a href="{{ route('admin.testimonials.index') }}" class="nav-link">
+                    <i class="fas fa-comments"></i>
+                    <span>Témoignages</span>
+                </a>
+            </li>
+
             <li class="nav-item {{ request()->routeIs('admin.axes.*') ? 'active' : '' }}">
                 <a href="{{ route('admin.axes.index') }}" class="nav-link">
                     <i class="fas fa-compass"></i>
-                    <span>Axes d'intervention</span>
+                    <span>Opportunités</span>
                 </a>
             </li>
             
-            <li class="nav-item {{ request()->routeIs('admin.fun-facts.*') ? 'active' : '' }}">
+            <!-- <li class="nav-item {{ request()->routeIs('admin.fun-facts.*') ? 'active' : '' }}">
                 <a href="{{ route('admin.fun-facts.index') }}" class="nav-link">
                     <i class="fas fa-lightbulb"></i>
                     <span>Fun Facts</span>
                 </a>
-            </li>
+            </li> -->
             
             <li class="nav-item {{ request()->routeIs('admin.stat-facts.*') ? 'active' : '' }}">
                 <a href="{{ route('admin.stat-facts.index') }}" class="nav-link">

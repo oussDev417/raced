@@ -441,7 +441,7 @@ button {
 }
 
 .ul-breadcrumb {
-  background: url(../img/breadcrumb-bg.jpg) no-repeat center center;
+  background: url(https://images.unsplash.com/photo-1590845947670-c009801ffa74?q=80&w=2059&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D) no-repeat center center;
   background-size: cover;
   padding: clamp(50px, 9.98vw, 190px) 0 clamp(40px, 9.46vw, 180px);
   text-align: center;
@@ -3124,7 +3124,7 @@ button {
 }
 
 .ul-cta {
-  background: url(../img/cta-bg.jpg) no-repeat center center/cover;
+  background: url(https://images.unsplash.com/photo-1509099836639-18ba1795216d?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D) no-repeat center center/cover;
   position: relative;
   z-index: 1;
   text-align: center;

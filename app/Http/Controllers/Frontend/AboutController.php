@@ -11,6 +11,7 @@ use App\Models\FunFact;
 use App\Models\Setting;
 use App\Models\Partner;
 use App\Models\StatFact;
+use App\Models\Testimonial;
 use Illuminate\Http\Request;
 
 class AboutController extends Controller
@@ -35,6 +36,12 @@ class AboutController extends Controller
         // Récupérer les statistiques
         $statFacts = StatFact::latest()->get();
 
+        // Récupérer les équipes
+        $equipes = Equipe::all();
+
+        // Récupérer les témoignages
+        $testimonials = Testimonial::all();
+
         // Récupérer les catégories d'équipe avec leurs membres
         $equipeCategories = EquipeCategory::with('equipes')->get();
 
@@ -48,7 +55,9 @@ class AboutController extends Controller
             'funFacts',
             'statFacts',
             'equipeCategories',
-            'partners'
+            'partners',
+            'equipes',
+            'testimonials'
         ));
     }
 
@@ -83,10 +92,21 @@ class AboutController extends Controller
         // Récupérer les statistiques
         $statFacts = StatFact::latest()->get();
 
-        return view('frontend.axes', compact(
+        return view('frontend.axes.index', compact(
             'settings',
             'axes',
             'statFacts'
+        ));
+    }
+
+    public function show($slug)
+    {
+        $axe = Axe::where('slug', $slug)->first();
+        $settings = Setting::first();
+
+        return view('frontend.axes.show', compact(
+            'settings',
+            'axe'
         ));
     }
 

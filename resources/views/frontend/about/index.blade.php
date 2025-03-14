@@ -4,264 +4,226 @@
 
 @section('content')
 
-<!-- Page Heading Section Start -->	
-<div class="pagehding-sec">
-    <div class="images-overlay"></div>		
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="page-heading">
-                    <h1>À propos de nous</h1>
-                </div>
-            </div>				
-        </div>
+<!-- BREADCRUMBS SECTION START -->
+<section class="ul-breadcrumb ul-section-spacing">
+    <div class="ul-container">
+        <h2 class="ul-breadcrumb-title">À propos</h2>
+        <ul class="ul-breadcrumb-nav">
+            <li><a href="{{ route('home') }}">Accueil</a></li>
+            <li><span class="separator"><i class="flaticon-right"></i></span></li>
+            <li>À propos</li>
+        </ul>
     </div>
-</div>
-<!-- Page Heading Section End -->	
+</section>
+<!-- BREADCRUMBS SECTION END -->
 
-<!-- Page Heading Section Start -->	
-<div class="breadcrumb-sec">	
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="breadcrumb-left">
-                    <ul>
-                        <li><a href="{{ route('home') }}">Accueil</a></li>
-                        <li><a href="#">À propos</a></li>
-                    </ul>
-                </div>
-            </div>	
+<!-- MISSION, VISION, HISTORY SECTION START -->
+<section class="ul-about-tabs ul-events ul-section-spacing pt-0">
+    <div class="ul-container">
+        <!-- heading -->
+        <div class="ul-section-heading align-items-center wow animate__fadeInUp">
+            <div class="left">
+                <span class="ul-section-sub-title">Tout sur nous</span>
+                <h2 class="ul-section-title text-white">@if(isset($about) && $about->title){{ $about->subtitle }}@else Historique @endif</h2>
+            </div>
+            <a href="{{ route('donation') }}" class="ul-btn"><i class="flaticon-fast-forward-double-right-arrows-symbol"></i> Donate Now</a>
+                
         </div>
-    </div>
-</div>
-<!-- Page Heading Section End -->
 
-<!-- How To Help Section Start -->	
-<div class="how-to-help-sec pt-100 pb-70">
-    <div class="how-to-help-sec-overlay"></div>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="sec-title">
-                    <h1>@if(isset($about) && $about->title){{ $about->title }}@else Historique @endif</h1>
-                    <div class="border-shape"></div>
-                </div>										
-                <div class="how-to-help-box">
-                    <div class="zecounting_sl" style="text-align: justify;">
-                        @if(isset($about) && $about->description)
-                            {!! $about->description !!}
-                        @else
-                            Carrefour Jeunesse Afrique a été initiée depuis en 2011 de la sensibilité d'un homme face aux souffrances des enfants, des adolescents et jeunes surtout des filles qui avaient beaucoup de difficulté à se scolariser, à aller en apprentissage et à se construire un avenir meilleur. La majorité de ses enfants côtoyés décrochaient les écoles et études scolaires faute de moyen des parents. D'autres abandonnaient les apprentissages parce que n'ayant pas payé les frais de contrat de formation professionnelle.
-                            <br> <br>
-                            En réalité, l'épanouissement socio-éducatif des enfants posait problème et leur avenir semble être hypothéqué. Sensible à ce tableau lugubre de la situation de ces cibles dans la commune et sensible au non-respect de ses droits de l'enfant et des filles surtout, un certain nombre de jeunes adultes ont décidé de mettre sur pieds une association pour donner de la joie à ces enfants, contribuer à leur épanouissement et surtout les accompagner avec leurs maigres ressources pour les autonomiser, leur donner de l'espoir et ce faisant garantir leur avenir.
-                            <br>
-                            C'est ainsi que ce groupe de personnes ont pris sur eux l'initiative et l'engagement de créer cette organisation dénommée « Carrefour Jeunesse Afrique (CJA) ». Ainsi est né ce centre socio-éducatif d'aide à l'enfance et à la jeunesse en 2011. Depuis cette époque, deux espaces « découvertes » étaient opérationnels. Devant le succès inattendu du projet, 13 autres ateliers ont vu le jour au fil des années…
-                        @endif
+        <!-- tab group -->
+        <div class="tab-group">
+            <!-- tabs -->
+            <div class="ul-about-tabs-wrapper">
+                <div id="tab-mission" class="ul-tab ul-about-tab active">
+                    <div class="ul-about-tab-img">
+                        <img src="{{ asset($about->secondary_image ?? 'img/luc-work.jpeg') }}" alt="Mission">
+                    </div>
+
+                    <div class="ul-about-tab-txt">
+                        <h3 class="ul-about-tab-title">Nos Missions</h3>
+                        <div class="ul-about-tab-descr">
+                            @if(isset($about) && $about->mission)
+                                {!! $about->mission !!}
+                            @endif
+                        </div>
+                    </div>
+                </div>
+
+                <!-- tab 02 / vision -->
+                <div id="tab-vision" class="ul-tab ul-about-tab">
+                    <div class="ul-about-tab-img">
+                        <img src="{{ asset($about->main_image ?? 'img/enfant-maire.jpeg') }}" alt="Vision">
+                    </div>
+
+                    <div class="ul-about-tab-txt">
+                        <h3 class="ul-about-tab-title">Nos Visions</h3>
+                        <div class="ul-about-tab-descr">
+                            @if(isset($about) && $about->vision)
+                                {!! $about->vision !!}
+                            @endif
+                        </div>
+                    </div>
+                </div>
+
+                <!-- tab 03 / history -->
+                <div id="tab-history" class="ul-tab ul-about-tab">
+                    <div class="ul-about-tab-img">
+                        <img src="{{ asset($about->main_image ?? 'img/enfant-maire.jpeg') }}" alt="Histoire">
+                    </div>
+
+                    <div class="ul-about-tab-txt">
+                        <h3 class="ul-about-tab-title">Notre Histoire</h3>
+                        <div class="ul-about-tab-descr">
+                            @if(isset($about) && $about->description)
+                                {!! $about->description !!}
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</div>		
-<!-- How To Help Section End -->		
 
-<!-- Event Section Start -->	
-<div class="event-sec pt-100 pb-70">
-    <div class="container">
-        <div class="row">						
-            <div class="col-md-6">
-                <div class="faq-sec">
-                    <div class="sec-title">
-                        <h1>Nos Visions</h1>
-                        <div class="border-shape"></div>
-                    </div>				
-                    <div class="how-to-help-box">
-                        <div class="counting_sl" style="text-align: justify;">
-                            <style>
-                                .counting_sl ul {
-                                    list-style-type: disc;
-                                    padding-left: 20px;
-                                    padding-bottom: 20px;
-                                }
-
-                                .counting_sl ul li {
-                                    font-weight: bold;
-                                }
-                            </style>
-                            @if(isset($about) && $about->vision)
-                                {!! $about->vision !!}
-                            @else
-                                La vision générale de Carrefour Jeunesse Afrique est de diminuer substantiellement les inégalités des chances et d'accroitre la capacité d'épanouissement des enfants surtout les filles, d'émancipation des adolescents et jeunes. Les quatre piliers développés par l'ONG-CJA contribuent à l'atteinte de la vision qui est de faire de Carrefour Jeunesse Afrique à Comé un service d'aide à la jeunesse en oeuvrant à ces cibles des activités et des informations leur permettant de développer leur plein potentiel et de pouvoir se développer dans un environnement favorable. De façon détaillée, il s'agit de : 
-                                <ul>
-                                    <li>
-                                        Concrétiser les projets selon ses 4 piliers d'interventions ;
-                                    </li>
-                                    <li>
-                                        Diminuer les inégalités sociales constatée ; 
-                                    </li>
-                                    <li>
-                                        Donner de la visibilité aux actions de CJA ;
-                                    </li>
-                                    <li>
-                                        Prendre en charge les jeunes de façon plus globale, à la fois sociale éducative, formative, citoyenne et interculturelle dans leur milieu de vie ;
-                                    </li>
-                                    <li>
-                                        Pérenniser les actions du centre par des organismes gouvernementaux et non gouvernementaux, avec des appuis institutionnels en équipements, en matériels, en ressources humaines, logistiques et financières pour renforcer les interventions de l'ONG-CJA et sa performance
-                                    </li>
-                                </ul>
-                            @endif
-                        </div>
-                    </div>					
-                </div>	
-            </div>	
-            <div class="col-md-6">
-                <div class="event-title">
-                    <img src="{{ asset($about->main_image ?? 'img/enfant-maire.jpeg') }}" alt="Vision"/>
-                </div>
-            </div>
-        </div>					
-    </div>
-</div>
-<!-- Event Section End -->
-
-<!-- Event Section Start -->	
-<div class="event-sec pt-100 pb-70">
-    <div class="container">
-        <div class="row">	
-            <div class="col-md-6">
-                <div class="zevent-title">
-                    <div class="sec-title">
-                        <h1>Nos Missions</h1>
-                        <div class="border-shape"></div>
-                    </div>		
-                    <img src="{{ asset($about->secondary_image ?? 'img/luc-work.jpeg') }}" alt="Mission"/>
-                </div>
-            </div>					
-            <div class="col-md-6">
-                <div class="faq-sec">
-                    <div class="how-to-help-box">
-                        <div class="counting_sl" style="text-align: justify;">
-                            <style>
-                                .counting_sl ul {
-                                    list-style-type: disc;
-                                    padding-left: 20px;
-                                    padding-bottom: 20px;
-                                }
-
-                                .counting_sl ul li {
-                                    font-weight: bold;
-                                }
-                            </style>
-                            @if(isset($about) && $about->mission)
-                                {!! $about->mission !!}
-                            @else
-                                La ligne que s'est donnée Carrefour Jeunesse Afrique est d'offrir une meilleure égalité des chances à travers des actions de prévention et d'émancipation. L'ONG Carrefour Jeunesse Afrique s'aligne sur les orientations mondiales de développement (l'Agenda 2030 et les Objectifs de Développement Durable, ODD), continentales (Agenda 2063, l'Afrique que nous voulons), nationales (le Plan National de Développement, PND-2025 ;le Programme d'Action du Gouvernement, PAG 2016-2021) et Communales (Plan de Développement de la Commune de Comé, 3ème génération, 2017-2022 Sa mission est de :
-                                <ul>
-                                    <li>
-                                        Promouvoir des activités sportives, ludiques, éducatives, culturelles ;
-                                    </li>
-                                    <li>
-                                        Accompagner toutes les initiatives visant à assurer l'autodétermination de la jeunesse ; 
-                                    </li>
-                                    <li>
-                                        Contribuer au brassage interculturel entre les jeunes africains et européens ;
-                                    </li>
-                                    <li>
-                                        Œuvrer pour l'éducation pour tous et en particulier celle des enfants surtout des filles ;
-                                    </li>
-                                    <li>
-                                        Œuvrer pour la promotion des droits de la femme et leur épanouissement ;
-                                    </li>
-                                    <li>
-                                        développer une solidarité communautaire dans la protection de l'environnement ;
-                                    </li>
-                                    <li>
-                                        promouvoir le développement rural à travers la production et la transformation agro-alimentaire ;
-                                    </li>
-                                    <li>
-                                        accompagner les collectivités dans la mise en œuvre du développement local et la coopération décentralisée Sud Sud. Nord Sud ;
-                                    </li>
-                                    <li>
-                                        promouvoir et développer le volontariat ;
-                                    </li>
-                                    <li>
-                                        Promouvoir le droit à la santé sexuelle et reproductives des adolescent-e-s et jeunes ;
-                                    </li>
-                                    <li>
-                                        promouvoir la santé pour tous et l'égalité des sexes ;
-                                    </li>
-                                </ul>
-                            @endif
-                        </div>
-                    </div>					
-                </div>	
-            </div>
-        </div>					
-    </div>
-</div>
-<!-- Event Section End -->
-
-<!-- Values Section Start -->
-<div class="how-to-help-sec pt-100 pb-70">
-    <div class="how-to-help-sec-overlay"></div>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="sec-title">
-                    <h1>Nos Valeurs</h1>
-                    <div class="border-shape"></div>
-                </div>
+            <div class="tab-navs ul-about-tabs-nav">
+                <button class="tab-nav active" data-tab="tab-mission">Nos Missions</button>
+                <button class="tab-nav" data-tab="tab-vision">Nos Visions</button>
+                <button class="tab-nav" data-tab="tab-history">Notre Histoire</button>
             </div>
         </div>
-        <div class="row">
-            @if(isset($about) && $about->values)
-                <style>
-                    .value-card {
-                        background-color: #fff;
-                        border-radius: 8px;
-                        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-                        padding: 20px;
-                        margin-bottom: 20px;
-                        height: 100%;
-                        transition: transform 0.3s ease;
-                    }
-                    .value-card:hover {
-                        transform: translateY(-5px);
-                    }
-                    .value-card h4 {
-                        color: #042a41;
-                        margin-bottom: 15px;
-                        font-weight: 600;
-                    }
-                    .value-card p {
-                        color: #042a41;
-                    }
-                    .value-icon {
-                        font-size: 40px;
-                        color: #8DC63F;
-                        margin-bottom: 15px;
-                    }
-                </style>
-                @php
-                    $valuesList = strip_tags($about->values, '<li>');
-                    preg_match_all('/<li>(.*?)<\/li>/s', $valuesList, $matches);
-                    $values = $matches[1] ?? [];
-                @endphp
-                
-                @foreach($values as $index => $value)
-                    <div class="col-md-3 col-sm-6">
-                        <div class="value-card">
-                            <div class="value-icon">
-                                <i class="fa fa-star"></i>
+
+        <!-- vectors -->
+        <div class="ul-events-vectors">
+            <img src="{{ asset('assets/img/about_shape2_1.png') }}" alt="Events Image" class="vector-2">
+        </div>
+    </div>
+</section>
+<!-- MISSION, VISION, HISTORY SECTION END -->
+
+<!-- TEAM SECTION START -->
+<section class="ul-team ul-section-spacing">
+    <div class="ul-container">
+        <!-- Heading -->
+        <div class="ul-section-heading justify-content-between">
+            <div class="left">
+                <span class="ul-section-sub-title">Notre équipe</span>
+                <h2 class="ul-section-title">Nous sommes une équipe de professionnels</h2>
+            </div>
+            <div>
+                <a href="{{ route('team') }}" class="ul-btn"><i class="flaticon-fast-forward-double-right-arrows-symbol"></i> Voir tous nos membres</a>
+            </div>
+        </div>
+
+        <div class="row row-cols-md-4 row-cols-sm-3 row-cols-2 row-cols-xxs-1 ul-team-row justify-content-center">
+            <!-- single member -->
+            @if(isset($equipes) && $equipes->count() > 0)
+                @foreach($equipes->take(4) as $member)
+                    <div class="col">
+                        <div class="ul-team-member">
+                            <div class="ul-team-member-img">
+                                @if($member->image)
+                                    <img src="{{ asset('storage/equipes/' . $member->image) }}" alt="{{ $member->name }}">
+                                @else
+                                    <img src="{{ asset('img/equipe/default.jpg') }}" alt="{{ $member->name }}">
+                                @endif
+                                <div class="ul-team-member-socials">
+                                    @if(isset($member->linkedin))
+                                        <a href="{{ $member->linkedin }}" target="_blank"><i class="flaticon-linkedin-big-logo"></i></a>
+                                    @endif
+                                    @if($member->phone)
+                                        <a href="tel:{{ $member->phone }}"><i class="flaticon-telephone-call"></i></a>
+                                    @endif
+                                    @if($member->email)
+                                        <a href="mailto:{{ $member->email }}"><i class="flaticon-email"></i></a>
+                                    @endif
+                                </div>
                             </div>
-                            <h4>{{ $value }}</h4>
+                            <div class="ul-team-member-info">
+                                <h3 class="ul-team-member-name">{{ $member->name }}</h3>
+                                <p class="ul-team-member-designation">{{ $member->position }}</p>
+                            </div>
                         </div>
                     </div>
                 @endforeach
             @endif
         </div>
     </div>
-</div>
-<!-- Values Section End -->
+</section>
+<!-- TEAM SECTION END -->
+
+<!-- TESTIMONIAL SECTION START -->
+<section class="ul-testimonial-2 ul-section-spacing">
+    <div class="ul-container wow animate__fadeInUp">
+        <div class="ul-section-heading">
+            <div>
+                <span class="ul-section-sub-title">Témoignages</span>
+                <h2 class="ul-section-title">Ce que les gens disent de nous</h2>
+            </div>
+            <a href="#" class="ul-btn"><i class="flaticon-fast-forward-double-right-arrows-symbol"></i> Tous les témoignages</a>
+        </div>
+
+        <div class="row ul-testimonial-2-row gy-4">
+            <!-- card -->
+            <div class="col-md-4">
+                <div class="ul-testimonial-2-overview">
+                    <span class="rating">4.9</span>
+                    <div class="ul-testimonial-2-overview-stars">
+                        <i class="flaticon-star"></i>
+                        <i class="flaticon-star"></i>
+                        <i class="flaticon-star"></i>
+                        <i class="flaticon-star"></i>
+                        <i class="flaticon-star-1"></i>
+                    </div>
+                    <span class="ul-testimonial-2-overview-title">5 étoiles</span>
+                    <p class="ul-testimonial-2-overview-descr">Découvrez ce que nos clients et partenaires disent de notre travail et de notre engagement.</p>
+                    <div class="ul-testimonial-2-overview-reviewers">
+                        @if(isset($testimonials) && $testimonials->count() > 0)
+                            @foreach($testimonials->take(4) as $reviewer)
+                                <img src="{{ asset('storage/testimonials/' . $reviewer->image) }}" alt="{{ $reviewer->name }}">
+                            @endforeach
+                        @endif
+                    </div>
+                </div>
+            </div>
+
+            <!-- txt -->
+            <div class="col-md-8">
+                <div class="ul-testimonial-2-slider swiper">
+                    <div class="swiper-wrapper">
+                        @if(isset($testimonials) && $testimonials->count() > 0)
+                            @foreach($testimonials as $testimonial)
+                                <!-- single slide -->
+                                <div class="swiper-slide">
+                                    <div class="ul-review ul-review-2">
+                                        <span class="icon"><i class="flaticon-quote-1"></i></span>
+                                        <p class="ul-review-descr">{{ $testimonial->message }}</p>
+                                        <div class="ul-review-bottom">
+                                            <div class="ul-review-reviewer">
+                                                <div class="reviewer-image">
+                                                    <img src="{{ asset('storage/testimonials/' . $testimonial->image) }}" alt="{{ $testimonial->name }}">
+                                                </div>
+                                                <div>
+                                                    <h3 class="reviewer-name">{{ $testimonial->name }}</h3>
+                                                    <span class="reviewer-role">{{ $testimonial->position }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        @endif
+                    </div>
+
+                    <div class="ul-testimonial-2-slider-nav">
+                        <button class="prev"><i class="flaticon-back"></i></button>
+                        <button class="next"><i class="flaticon-next"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- TESTIMONIAL SECTION END -->
+
+
+<!-- PARTNERS SECTION START -->
+ @include('frontend.layouts.partials.partners')
 
 @endsection 

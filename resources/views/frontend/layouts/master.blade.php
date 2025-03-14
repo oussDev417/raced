@@ -4,16 +4,16 @@
     <!-- Meta Tags -->
     <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
-    <meta name="description" content="@yield('meta_description', 'CJ AONG - Organisation Non Gouvernementale')">
+    <meta name="description" content="@yield('meta_description', 'RACED ONG - Organisation Non Gouvernementale')">
     <meta name="keywords" content="@yield('meta_keywords', 'ONG, aide humanitaire, développement, projets sociaux')">
-    <meta name="author" content="CJ AONG">
+    <meta name="author" content="BIO DEV- XTOP DIGITAL">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     
     <!-- Title -->
-    <title>@yield('title') - CJA ONG</title>
+    <title>@yield('title') - RACED ONG</title>
     
     <!-- Favicon Icon -->
-    <link rel="icon" type="image/png" href="{{ asset('assets/images/favicon.png') }}">
+    <link rel="shortcut icon" href="{{ asset('assets/images/favicon.png') }}" type="image/x-icon">
     
     <!-- Apple Touch Icons -->
     <link rel="apple-touch-icon" href="{{ asset('assets/img/apple-touch-icon.png') }}">
@@ -25,6 +25,9 @@
     <link rel="apple-touch-icon" sizes="144x144" href="{{ asset('assets/img/apple-touch-icon-144x144.png') }}">
     <link rel="apple-touch-icon" sizes="152x152" href="{{ asset('assets/img/apple-touch-icon-152x152.png') }}">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/img/apple-touch-icon-180x180.png') }}">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Stylesheets Start -->
     <link rel="stylesheet" href="{{ asset('assets/icon/flaticon_charitics.css') }}">

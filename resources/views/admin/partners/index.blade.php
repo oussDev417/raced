@@ -43,8 +43,8 @@
                                         </span>
                                     </td>
                                     <td>
-                                        @if($partner->logo)
-                                            <img src="{{ asset($partner->logo) }}" alt="{{ $partner->name }}" class="img-thumbnail" style="max-height: 50px;">
+                                        @if($partner->image)
+                                            <img src="{{ asset('storage/partners/' . $partner->image) }}" alt="{{ $partner->name }}" class="img-thumbnail" style="max-height: 50px;">
                                         @else
                                             <span class="badge bg-secondary">Pas de logo</span>
                                         @endif

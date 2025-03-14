@@ -8,6 +8,7 @@ use App\Models\Axe;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
+use Illuminate\Support\Str;
 
 class AxeController extends Controller
 {
@@ -34,7 +35,7 @@ class AxeController extends Controller
     public function store(AxeRequest $request)
     {
         $data = $request->validated();
-        
+        $data['slug'] = $this->generateSlug($data['title']);
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
@@ -56,9 +57,15 @@ class AxeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($slug)
     {
-        //
+        $axe = Axe::where('slug', $slug)->first();
+        return view('admin.axes.show', compact('axe'));
+    }
+
+    public function generateSlug($title)
+    {
+        return Str::slug($title);
     }
 
     /**
@@ -75,7 +82,7 @@ class AxeController extends Controller
     public function update(AxeRequest $request, Axe $axe)
     {
         $data = $request->validated();
-        
+        $data['slug'] = $this->generateSlug($data['title']);
         if ($request->hasFile('image')) {
             // Supprimer l'ancienne image
             if ($axe->image && Storage::exists('public/axes/' . $axe->image)) {

@@ -28,19 +28,23 @@ use App\Http\Controllers\Frontend\TeamController as FrontendTeamController;
 use App\Http\Controllers\Admin\GalerieCategoryController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SliderController;
-
+use App\Http\Controllers\Admin\TestimonialController;
+use App\Http\Controllers\Admin\NewsletterController;
 // Frontend Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/a-propos', [FrontendAboutController::class, 'index'])->name('about');
 Route::get('/equipe', [FrontendTeamController::class, 'index'])->name('team');
 Route::get('/donation', [FrontendContactController::class, 'donation'])->name('donation');
-Route::get('/axes-intervention', [FrontendAboutController::class, 'axes'])->name('axes');
+Route::get('/opportunites', [FrontendAboutController::class, 'axes'])->name('axes');
+Route::get('/opportunites/{slug}', [FrontendAboutController::class, 'show'])->name('axes.show');
 Route::get('/partenaires', [FrontendAboutController::class, 'partners'])->name('partners');
 
 Route::get('/contact', [FrontendContactController::class, 'index'])->name('contact');
 Route::post('/contact', [FrontendContactController::class, 'store'])->name('contact.store');
 Route::get('/benevole', [FrontendContactController::class, 'benevole'])->name('benevole');
 Route::post('/benevole', [FrontendContactController::class, 'storeBenevole'])->name('benevole.store');
+
+Route::post('newsletter', [FrontendContactController::class, 'newsletter'])->name('newsletter.store');
 
 Route::get('/actualites', [FrontendNewsController::class, 'index'])->name('news.index');
 Route::get('/actualites/{slug}', [FrontendNewsController::class, 'show'])->name('news.show');
@@ -68,15 +72,24 @@ Route::prefix('admin')->name('admin.')->group(function () {
         
         // Benevoles
         Route::resource('benevoles', BenevoleController::class);
+
         
         // Contacts
         Route::resource('contacts', ContactController::class);
         Route::post('contacts/destroy-multiple', [ContactController::class, 'destroyMultiple'])->name('contacts.destroyMultiple');
         
+        // Newsletter
+        Route::resource('newsletters', NewsletterController::class);
+        
         // About
         Route::get('/about', [AboutController::class, 'index'])->name('about.index');
         Route::get('/about/edit', [AboutController::class, 'edit'])->name('about.edit');
         Route::put('/about/update', [AboutController::class, 'update'])->name('about.update');
+        
+        // Testimonials
+        
+        Route::resource('testimonials', TestimonialController::class);
+        Route::post('testimonials/update-order', [TestimonialController::class, 'updateOrder'])->name('testimonials.update-order');
         
         // Axes
         Route::resource('axes', AxeController::class);

@@ -4,75 +4,57 @@
 
 @section('content')
 
-<!-- Page Heading Section Start -->	
-<div class="pagehding-sec">
-    <div class="images-overlay"></div>		
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="page-heading">
-                    <h1>Nos projets</h1>
-                </div>
-            </div>				
-        </div>
+<!-- BREADCRUMBS SECTION START -->
+<section class="ul-breadcrumb ul-section-spacing">
+    <div class="ul-container">
+        <h2 class="ul-breadcrumb-title">Nos projets</h2>
+        <ul class="ul-breadcrumb-nav">
+            <li><a href="{{ route('home') }}">Accueil</a></li>
+            <li><span class="separator"><i class="flaticon-right"></i></span></li>
+            <li>Nos projets</li>
+        </ul>
     </div>
-</div>
-<!-- Page Heading Section End -->	
+</section>
+<!-- BREADCRUMBS SECTION END -->
 
-<!-- Page Heading Section Start -->	
-<div class="breadcrumb-sec">	
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="breadcrumb-left">
-                    <ul>
-                        <li><a href="{{ route('home') }}">Accueil</a></li>
-                        <li><a href="#">Nos projets</a></li>
-                    </ul>
-                </div>
-            </div>	
-        </div>
-    </div>
-</div>
-<!-- Page Heading Section End -->
 
-<!-- Recent Causes Section Start -->	
-<div class="recent-causes-sec pt-100">
-    <div class="container">		
-        <div class="row">
-            <div class="col-md-12">
-                <div class="sec-title">
-                    <h1>Nos projets</h1>
-                    <div class="border-shape"></div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
+<!-- PROJECTS SECTION START -->
+<section class="ul-projects ul-section-spacing">
+    <div class="ul-container">
+        <div class="row ul-bs-row justify-content-center">
             @if(isset($projects) && count($projects) > 0)
-                @foreach($projects as $project)
-                    <div class="col-md-4">
-                        <div class="single-causes">
-                            <div class="causes-thumb">
-                                @if($project->image)
-                                    <img src="{{ asset($project->image) }}" alt="{{ $project->title }}"/>
-                                @endif
-                                <div class="causes2-thumb-overlay">
-                                    <ul>
-                                        <li><a href="{{ route('projects.show', $project->slug) }}"><i class="fa fa-unlink"></i></a></li>
-                                    </ul>
-                                </div>
+                @foreach($projects as $key => $project)
+                    @if($key % 3 == 0)
+                    <div class="col-lg-8 col-md-6 col-10 col-xxs-12">
+                        <div class="ul-project">
+                            <div class="ul-project-img">
+                                <img src="{{ asset($project->image ?? 'assets/img/project-1.jpg') }}" alt="{{ $project->title }}">
                             </div>
-                            <div class="single-causes-text">
-                                <h2><a href="{{ route('projects.show', $project->slug) }}">{{ $project->title }}</a></h2>
-                                <p>{{ Str::limit(strip_tags($project->short_description), 100) }}</p>
-                                <div class="project-meta">
-                                    @if($project->created_at)
-                                        <span class="project-date">{{ \Carbon\Carbon::parse($project->created_at)->format('d/m/Y') }}</span>
-                                    @endif
+                            <div class="ul-project-txt">
+                                <div>
+                                    <h3 class="ul-project-title"><a href="{{ route('projects.show', $project->slug) }}">{{ $project->title }}</a></h3>
+                                    <p class="ul-project-descr">{{ Str::limit(strip_tags($project->short_description), 100) }}</p>
                                 </div>
+                                <a href="{{ route('projects.show', $project->slug) }}" class="ul-project-btn"><i class="flaticon-up-right-arrow"></i></a>
                             </div>
                         </div>
                     </div>
+                    @else
+                    <div class="col-lg-4 col-md-6 col-10 col-xxs-12">
+                        <div class="ul-project ul-project--sm">
+                            <div class="ul-project-img">
+                                <img src="{{ asset($project->image ?? 'assets/img/project-2.jpg') }}" alt="{{ $project->title }}">
+                            </div>
+                            <div class="ul-project-txt">
+                                <div>
+                                    <h3 class="ul-project-title"><a href="{{ route('projects.show', $project->slug) }}">{{ $project->title }}</a></h3>
+                                    <p class="ul-project-descr">{{ Str::limit(strip_tags($project->short_description), 60) }}</p>
+                                </div>
+                                <a href="{{ route('projects.show', $project->slug) }}" class="ul-project-btn"><i class="flaticon-up-right-arrow"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    @endif
                 @endforeach
             @else
                 <div class="col-md-12">
@@ -84,15 +66,13 @@
         <!-- Pagination -->
         @if(isset($projects) && method_exists($projects, 'links'))
             <div class="row mt-4">
-                <div class="col-md-12">
-                    <div class="pagination-area">
-                        {{ $projects->links() }}
-                    </div>
+                <div class="col-md-12 text-center">
+                    {{ $projects->links() }}
                 </div>
             </div>
         @endif
     </div>
-</div>
-<!-- Project Area End -->
+</section>
+<!-- PROJECTS SECTION END -->
 
 @endsection 

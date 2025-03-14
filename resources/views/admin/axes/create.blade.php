@@ -1,12 +1,12 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Ajouter un axe stratégique')
+@section('title', 'Ajouter une opportunité')
 
 @section('breadcrumb')
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Tableau de bord</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('admin.axes.index') }}">Axes stratégiques</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('admin.axes.index') }}">Opportunités</a></li>
         <li class="breadcrumb-item active" aria-current="page">Ajouter</li>
     </ol>
 </nav>
@@ -18,10 +18,10 @@
 
     <div class="card">
         <div class="card-header">
-            <h5 class="card-title mb-0">Ajouter un axe stratégique</h5>
+            <h5 class="card-title mb-0">Ajouter une opportunité</h5>
         </div>
         <div class="card-body">
-            <form action="{{ route('admin.axes.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.axes.store') }}" method="POST" enctype="multipart/form-data" id="axeForm">
                 @csrf
                 
                 <div class="row">
@@ -35,21 +35,7 @@
                             @enderror
                         </div>
 
-                        <div class="mb-3">
-                            <label for="slug" class="form-label">Slug <span class="text-danger">*</span></label>
-                            <div class="input-group">
-                                <input type="text" class="form-control @error('slug') is-invalid @enderror" 
-                                    id="slug" name="slug" value="{{ old('slug') }}" required>
-                                <button class="btn btn-outline-secondary" type="button" id="regenerateSlug">
-                                    <i class="fas fa-sync-alt"></i>
-                                </button>
-                            </div>
-                            @error('slug')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                            <small class="form-text text-muted">L'identifiant unique de l'axe stratégique dans l'URL (généré automatiquement à partir du titre).</small>
-                        </div>
-
+                        
                         <div class="mb-3">
                             <label for="short_description" class="form-label">Description courte <span class="text-danger">*</span></label>
                             <textarea class="form-control @error('short_description') is-invalid @enderror" 
@@ -62,8 +48,10 @@
 
                         <div class="mb-3">
                             <label for="description" class="form-label">Description détaillée <span class="text-danger">*</span></label>
-                            <textarea class="form-control @error('description') is-invalid @enderror" 
-                                id="description" name="description" rows="10" required>{{ old('description') }}</textarea>
+                            <input type="hidden" name="description" id="description_input">
+                            <div id="description_editor" class="editor-container @error('description') is-invalid @enderror">
+                                {!! old('description') !!}
+                            </div>
                             @error('description')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -107,22 +95,13 @@
 @section('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialisation de l'éditeur TinyMCE pour la description détaillée
-    if (typeof tinymce !== 'undefined') {
-        tinymce.init({
-            selector: '#description',
-            height: 400,
-            menubar: false,
-            plugins: [
-                'advlist autolink lists link image charmap print preview anchor',
-                'searchreplace visualblocks code fullscreen',
-                'insertdatetime media table paste code help wordcount'
-            ],
-            toolbar: 'undo redo | formatselect | bold italic backcolor | \
-                alignleft aligncenter alignright alignjustify | \
-                bullist numlist outdent indent | removeformat | help'
-        });
-    }
+    // Initialisation de l'éditeur Quill pour la description détaillée
+    const descriptionEditor = initQuillEditor('#description_editor', 'Entrez la description détaillée...');
+    
+    // Mise à jour du champ caché avant la soumission du formulaire
+    document.getElementById('axeForm').addEventListener('submit', function() {
+        document.getElementById('description_input').value = descriptionEditor.root.innerHTML;
+    });
 
     // Prévisualisation de l'image
     const imageInput = document.getElementById('image');
@@ -139,33 +118,6 @@ document.addEventListener('DOMContentLoaded', function() {
             
             reader.readAsDataURL(this.files[0]);
         }
-    });
-
-    // Génération automatique du slug
-    const titleInput = document.getElementById('title');
-    const slugInput = document.getElementById('slug');
-    const regenerateButton = document.getElementById('regenerateSlug');
-
-    function generateSlug(text) {
-        return text
-            .toString()
-            .normalize('NFD')
-            .replace(/[\u0300-\u036f]/g, '')
-            .toLowerCase()
-            .trim()
-            .replace(/\s+/g, '-')
-            .replace(/[^\w-]+/g, '')
-            .replace(/--+/g, '-');
-    }
-
-    titleInput.addEventListener('input', function() {
-        if (!slugInput.value || slugInput.value === generateSlug(titleInput.value.trim())) {
-            slugInput.value = generateSlug(this.value);
-        }
-    });
-
-    regenerateButton.addEventListener('click', function() {
-        slugInput.value = generateSlug(titleInput.value);
     });
 });
 </script>

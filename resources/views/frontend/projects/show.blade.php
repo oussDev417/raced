@@ -3,186 +3,134 @@
 @section('title', $project->title ?? 'Détail du projet')
 
 @section('content')
+<!-- BREADCRUMBS SECTION START -->
+<section class="ul-breadcrumb ul-section-spacing">
+    <div class="ul-container">
+        <h2 class="ul-breadcrumb-title">{{ $project->title ?? 'Détail du projet' }}</h2>
+        <ul class="ul-breadcrumb-nav">
+            <li><a href="{{ route('home') }}">Accueil</a></li>
+            <li><span class="separator"><i class="flaticon-right"></i></span></li>
+            <li><a href="{{ route('projects.index') }}">Nos projets</a></li>
+            <li><span class="separator"><i class="flaticon-right"></i></span></li>
+            <li>{{ $project->title ?? 'Détail du projet' }}</li>
+        </ul>
+    </div>
+</section>
+<!-- BREADCRUMBS SECTION END -->
 
-<!-- Page Heading Section Start -->	
-<div class="pagehding-sec">
-		<div class="images-overlay"></div>		
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
-					<div class="page-heading">
-						<h1>{{ $project->title ?? 'Détail du projet' }}</h1>
-					</div>
-				</div>				
-			</div>
-		</div>
-	</div>
-	<!-- Page Heading Section End -->	
-	<!-- Page Heading Section Start -->	
-	<div class="breadcrumb-sec">	
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
-					<div class="breadcrumb-left">
-						<ul>
-							<li><a href="{{ route('home') }}">Accueil</a></li>
-							<li><a href="{{ route('projects.index') }}">Nos projets</a></li>
-							<li>{{ $project->title ?? 'Détail du projet' }}</li>
-						</ul>
-					</div>
-				</div>	
-			</div>
-		</div>
-	</div>
-<!-- Breadcrumb Area End -->
-
-<!-- Project Detail Start -->
-<div class="blog-detail-area pt-100 pb-100">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8">
-                <div class="blog-detail-item shadow-lg rounded overflow-hidden" style="border: 1px solid #eee;">
-                    <div class="blog-detail-photo position-relative">
-                        @if($project->image)
-                            <img src="{{ asset($project->image) }}" alt="{{ $project->title }}" class="img-fluid w-100">
-                        @else
-                            <img src="{{ asset('images/projects/default.jpg') }}" alt="{{ $project->title }}" class="img-fluid w-100" style="height: 400px; object-fit: cover;">
-                        @endif
-                        <div class="overlay-gradient"></div>
-                    </div>
-                    <div class="blog-detail-text p-5">
-                        <div class="blog-detail-info mb-4">
-                            @if($project->created_at)
-                                <span class="badge p-2" style="background-color: #042a41;"><i class="far fa-calendar-alt me-2"></i> Début: {{ \Carbon\Carbon::parse($project->created_at)->format('d/m/Y') }}</span>
-                            @endif
-                        </div>
-                        <div class="blog-detail-content">
-                            <h3 class="mb-4" style="color: #042a41; font-weight: 600;">{{ $project->title }}</h3>
-                            <div class="content-text" style="color: #555; line-height: 1.8;">
-                                {!! $project->description !!}
-                            </div>
-                        </div>
-                        
-                        <style>
-                            .share-buttons {
-                                display: flex;
-                                justify-content: center;
-                                align-items: center;
-                                gap: 1rem;
-                            }
-                            .share-button {
-                                width: 40px;
-                                height: 40px;
-                                display: flex;
-                                align-items: center;
-                                justify-content: center;
-                                transition: transform 0.2s;
-                            }
-                            .share-button:hover {
-                                transform: translateY(-3px);
-                            }
-                        </style>
-                        <!-- Share buttons -->
-                        <div class="blog-detail-share border-top border-bottom py-4 my-5">
-                            <h4 class="mb-3 text-center" style="color: #042a41;">Partager ce projet:</h4>
-                            <div class="share-buttons">
-                                <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->url()) }}" target="_blank" class="btn rounded-circle share-button" style="background-color: #8DC63F; color: white;"><i class="fab fa-facebook-f"></i></a>
-                                <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->url()) }}&text={{ urlencode($project->title) }}" target="_blank" class="btn rounded-circle share-button" style="background-color: #8DC63F; color: white;"><i class="fab fa-twitter"></i></a>
-                                <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ urlencode(request()->url()) }}&title={{ urlencode($project->title) }}" target="_blank" class="btn rounded-circle share-button" style="background-color: #8DC63F; color: white;"><i class="fab fa-linkedin-in"></i></a>
-                                <a href="https://wa.me/?text={{ urlencode($project->title . ' ' . request()->url()) }}" target="_blank" class="btn rounded-circle share-button" style="background-color: #8DC63F; color: white;"><i class="fab fa-whatsapp"></i></a>
-                            </div>
-                        </div>
-                        
-                        <!-- Call to action -->
-                        <div class="project-cta mt-5 rounded p-4" style="background-color: #f8f9fa;">
-                            <div class="row align-items-center">
-                                <div class="col-md-8">
-                                    <h4 class="mb-2" style="color: #042a41;">Soutenez ce projet</h4>
-                                    <p class="mb-md-0" style="color: #555;">Vous souhaitez contribuer à la réussite de ce projet ? Faites un don ou devenez bénévole dès maintenant.</p>
-                                </div>
-                                <div class="col-md-4 text-md-end">
-                                    <a href="{{ route('donation') }}" class="btn btn-lg" style="background-color: #8DC63F; color: white;">Faire un don</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+<div class="ul-container ul-section-spacing">
+    <div class="ul-project-details-img-slider swiper">
+        <div class="swiper-wrapper">
+            <!-- single slide -->
+            <div class="swiper-slide">
+                <div>
+                    @if($project->image)
+                        <img src="{{ asset($project->image) }}" alt="{{ $project->title }}">
+                     @endif
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="sidebar">
-                    <style>
-                        .recent-project-item {
-                            display: flex;
-                            align-items: center;
-                            padding: 10px 0;
-                            border-bottom: 1px solid #eee;
-                        }
-                        .recent-project-image {
-                            flex: 0 0 80px;
-                            margin-right: 15px;
-                        }
-                        .recent-project-content {
-                            flex: 1;
-                        }
-                        .recent-project-title {
-                            color: #042a41;
-                            font-weight: bold;
-                            text-decoration: none;
-                            margin-bottom: 5px;
-                            display: block;
-                        }
-                        .recent-project-date {
-                            color: #6c757d;
-                            font-size: 0.875rem;
-                        }
-                    </style>
-                    
-                    <!-- Recent Projects -->
-                    @if(isset($recentProjects) && count($recentProjects) > 0)
-                        <div class="sidebar-item bg-white shadow rounded overflow-hidden mb-4">
-                            <div class="sidebar-title p-3" style="background-color: #042a41;">
-                                <h3 class="h5 mb-0 text-white" style="color: #fff; font-weight: bold;">Projets récents</h3>
-                            </div>
-                            <div class="sidebar-body p-3">
-                                <ul class="list-unstyled mb-0">
-                                    @foreach($recentProjects as $recentProject)
-                                        <li class="recent-project-item">
-                                            <div class="recent-project-image">
-                                                @if($recentProject->image)
-                                                    <img src="{{ asset($recentProject->image) }}" alt="{{ $recentProject->title }}" class="rounded-3" width="80" height="80" style="object-fit: cover;">
-                                                @else
-                                                    <img src="{{ asset('images/projects/default-thumb.jpg') }}" alt="{{ $recentProject->title }}" class="rounded-3" width="80" height="80" style="object-fit: cover;">
-                                                @endif
-                                            </div>
-                                            <div class="recent-project-content">
-                                                <a href="{{ route('projects.show', $recentProject->slug) }}" class="recent-project-title">{{ $recentProject->title }}</a>
-                                                <span class="recent-project-date">{{ \Carbon\Carbon::parse($recentProject->created_at)->format('d/m/Y') }}</span>
-                                            </div>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        </div>
-                    @endif
-                    
-                    <!-- Contact Box -->
-                    <div class="sidebar-item bg-white shadow rounded overflow-hidden">
-                        <div class="sidebar-title p-3" style="background-color: #042a41;">
-                            <h3 class="h5 mb-0 text-white" style="color: #fff; font-weight: bold;">Besoin d'informations?</h3>
-                        </div>
-                        <div class="sidebar-body p-4">
-                            <div class="sidebar-contact text-center">
-                                <p class="mb-4" style="color: #555;">Pour plus d'informations sur ce projet, n'hésitez pas à nous contacter.</p>
-                                <div class="sidebar-contact-btn">
-                                    <a href="{{ route('contact') }}" class="btn btn-lg w-100" style="background-color: #8DC63F; color: white;">Contactez-nous</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <div class="swiper-slide">
+                <div>
+                    <img src="https://images.unsplash.com/photo-1584592487914-a29c64f25887?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="{{ $project->title }}">
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <div>
+                    <img src="https://images.unsplash.com/photo-1547496614-54ff387d650a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="{{ $project->title }}">
+                </div>
+            </div>
+            <!-- Si vous avez plusieurs images, vous pouvez les ajouter ici -->
+        </div>
+
+        <div class="ul-project-details-slider-nav ul-slider-nav">
+            <button class="prev"><i class="flaticon-back"></i></button>
+            <button class="next"><i class="flaticon-next"></i></button>
+        </div>
+    </div>
+
+    <div class="row gx-5 gy-4 flex-column-reverse flex-lg-row">
+        <!-- contenu détaillé du projet -->
+        <div class="col-md-8">
+            <div class="ul-event-details">
+                <h2 class="ul-event-details-title">{{ $project->title }}</h2>
+                <p class="ul-event-details-descr">{!! $project->short_description ?? '' !!}</p>
+                <div class="ul-event-details-content">
+                    {!! $project->description !!}
+                </div>
+                
+                <!-- Call to action -->
+                <div class="mt-5">
+                    <h3 class="ul-event-inner-title">Soutenez ce projet</h3>
+                    <p>Vous souhaitez contribuer à la réussite de ce projet ? Faites un don ou devenez bénévole dès maintenant.</p>
+                    <a href="{{ route('donation') }}" class="ul-btn ul-btn-primary">Faire un don</a>
                 </div>
             </div>
         </div>
+
+        <!-- sidebar -->
+        <div class="col-md-4">
+            <div class="ul-project-details-infos">
+                <h4 class="ul-project-details-infos-title">Informations du projet</h4>
+                <ul class="ul-project-details-infos-list">
+                    @if($project->category)
+                    <li><span class="key">CATÉGORIE</span>:<span class="value">{{ $project->category->name ?? 'Non spécifiée' }}</span></li>
+                    @endif
+                    <li><span class="key">AUTEUR</span>:<span class="value">{{ $project->author ?? 'RACED ONG' }}</span></li>
+                    @if($project->tags)
+                    <li><span class="key">TAGS</span>:<span class="value">{{ $project->tags ?? 'Non spécifiés' }}</span></li>
+                    @endif
+                    @if($project->budget)
+                    <li><span class="key">BUDGET</span>:<span class="value">{{ $project->budget ?? 'Non spécifié' }}</span></li>
+                    @endif
+                    <li><span class="key">DATE</span>:<span class="value">{{ $project->created_at ? \Carbon\Carbon::parse($project->created_at)->format('d F, Y') : 'Non spécifiée' }}</span></li>
+                </ul>
+
+                <div class="ul-footer-socials ul-project-details-infos-shares">
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->url()) }}" target="_blank"><i class="flaticon-facebook"></i></a>
+                    <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->url()) }}&text={{ urlencode($project->title) }}" target="_blank"><i class="flaticon-twitter"></i></a>
+                    <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ urlencode(request()->url()) }}&title={{ urlencode($project->title) }}" target="_blank"><i class="flaticon-linkedin-big-logo"></i></a>
+                    <a href="https://wa.me/?text={{ urlencode($project->title . ' ' . request()->url()) }}" target="_blank"><i class="flaticon-youtube"></i></a>
+                </div>
+            </div>
+            
+            <!-- Projets récents -->
+            @if(isset($recentProjects) && count($recentProjects) > 0)
+            <div class="ul-project-details-infos mt-4">
+                <h4 class="ul-project-details-infos-title">Projets récents</h4>
+                <ul class="ul-project-details-infos-list">
+                    @foreach($recentProjects as $recentProject)
+                    <li>
+                        <a href="{{ route('projects.show', $recentProject->slug) }}" class="d-flex align-items-center py-2">
+                            <div class="me-3" style="width: 60px; height: 60px; overflow: hidden; border-radius: 8px;">
+                                @if($recentProject->image)
+                                <img src="{{ asset($recentProject->image) }}" alt="{{ $recentProject->title }}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                                @else
+                                <img src="{{ asset('assets/img/project-1.jpg') }}" alt="{{ $recentProject->title }}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                                @endif
+                            </div>
+                            <div>
+                                <span class="d-block text-white">{{ $recentProject->title }}</span>
+                                <small class="text-white">{{ \Carbon\Carbon::parse($recentProject->created_at)->format('d/m/Y') }}</small>
+                            </div>
+                        </a>
+                    </li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
+            
+            <!-- Contact -->
+            <div class="ul-project-details-infos mt-4">
+                <h4 class="ul-project-details-infos-title">Besoin d'informations?</h4>
+                <p class="mb-3">Pour plus d'informations sur ce projet, n'hésitez pas à nous contacter.</p>
+                <a href="{{ route('contact') }}" class="ul-btn ul-btn-primary w-100 text-center">Contactez-nous</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="ul-project-details-nav">
+        <a href="#"><i class="flaticon-back"></i> <span>Projet précédent</span></a>
+        <a href="#"><i class="flaticon-next"></i> <span>Projet suivant</span></a>
     </div>
 </div>
-<!-- Project Detail End -->
 @endsection 

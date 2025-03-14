@@ -18,9 +18,6 @@
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="card-title mb-0">Liste des statistiques</h5>
-            <a href="{{ route('admin.stat-facts.create') }}" class="btn btn-primary">
-                <i class="fas fa-plus me-2"></i>Ajouter une statistique
-            </a>
         </div>
         <div class="card-body">
             <div class="table-responsive">

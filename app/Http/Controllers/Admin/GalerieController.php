@@ -54,16 +54,32 @@ class GalerieController extends Controller
             $file = $request->file('image');
             $filename = time() . '_' . $file->getClientOriginalName();
             
+            // S'assurer que le répertoire existe
+            $uploadPath = public_path('uploads/gallery');
+            if (!file_exists($uploadPath)) {
+                mkdir($uploadPath, 0755, true);
+            }
+            
             // Utiliser Intervention Image v3 pour optimiser l'image
-            $manager = new ImageManager(new Driver());
-            $manager->read($file)
-                ->resize(1200, null, function ($constraint) {
-                    $constraint->aspectRatio();
-                    $constraint->upsize();
-                })
-                ->save(public_path('uploads/gallery/' . $filename));
-                
-            $image->path = 'uploads/gallery/' . $filename;
+            try {
+                $manager = new ImageManager(new Driver());
+                $manager->read($file)
+                    ->resize(1200, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                        $constraint->upsize();
+                    })
+                    ->save($uploadPath . '/' . $filename);
+                    
+                $image->path = 'uploads/gallery/' . $filename;
+            } catch (\Intervention\Image\Exceptions\NotWritableException $e) {
+                return redirect()->back()
+                    ->with('error', 'Impossible d\'enregistrer l\'image. Vérifiez les permissions du dossier.')
+                    ->withInput();
+            } catch (\Exception $e) {
+                return redirect()->back()
+                    ->with('error', 'Une erreur est survenue lors du traitement de l\'image: ' . $e->getMessage())
+                    ->withInput();
+            }
         }
         
         $image->save();

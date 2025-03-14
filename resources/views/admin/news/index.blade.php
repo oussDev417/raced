@@ -65,7 +65,7 @@
                             <td>{{ Str::limit($item->short_description, 100) }}</td>
                             <td>{{ $item->created_at->format('d/m/Y') }}</td>
                             <td>
-                                <a href="{{ route('admin.news.show', $item->id) }}" 
+                                <a href="{{ route('news.show', $item->slug) }}" 
                                     class="btn btn-info btn-sm" title="Voir">
                                     <i class="fas fa-eye"></i>
                                 </a>

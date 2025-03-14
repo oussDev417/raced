@@ -1,18 +1,20 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\Partner;
+use App\Http\Controllers\Controller;
+use App\Models\Newsletter;
 use Illuminate\Http\Request;
 
-class PartnerController extends Controller
+class NewsletterController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $newsletters = Newsletter::all();
+        return view('admin.newsletters.index', compact('newsletters'));
     }
 
     /**
@@ -34,7 +36,7 @@ class PartnerController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Partner $partner)
+    public function show(Newsletter $newsletter)
     {
         //
     }
@@ -42,7 +44,7 @@ class PartnerController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Partner $partner)
+    public function edit(Newsletter $newsletter)
     {
         //
     }
@@ -50,7 +52,7 @@ class PartnerController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Partner $partner)
+    public function update(Request $request, Newsletter $newsletter)
     {
         //
     }
@@ -58,8 +60,9 @@ class PartnerController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Partner $partner)
+    public function destroy(Newsletter $newsletter)
     {
-        //
+        $newsletter->delete();
+        return redirect()->route('admin.newsletters.index')->with('success', 'Newsletter supprimé avec succès');
     }
 }

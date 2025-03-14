@@ -24,7 +24,7 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                             <li>
-                                <a class="dropdown-item" href="{{ route('admin.profile.edit') }}">
+                                <a class="dropdown-item" href="{{ route('admin.users.edit', auth()->user()) }}">
                                     <i class="fas fa-user"></i> Mon profil
                                 </a>
                             </li>

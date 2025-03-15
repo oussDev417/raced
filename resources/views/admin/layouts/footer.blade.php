@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-6">
                 <p class="copyright">
-                    &copy; {{ date('Y') }} <strong>CJA ONG</strong>. Tous droits réservés.
+                    &copy; {{ date('Y') }} <strong>RACED</strong>. Tous droits réservés.
                 </p>
             </div>
             <div class="col-md-6">

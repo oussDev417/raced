@@ -140,6 +140,8 @@
     </div>
 </section>
 <!-- Donation Impact Section End -->
+ <!-- Partenaires -->
+@include('frontend.layouts.partials.partners') 
 
 <style>
 /* Donation Page Styles */
@@ -281,6 +283,5 @@
 }
 </style>
 
-<!-- Partenaires -->
-@include('frontend.layouts.partials.partners') 
+
 @endsection

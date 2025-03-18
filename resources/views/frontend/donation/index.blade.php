@@ -43,12 +43,15 @@
                             <div class="ul-donation-option-icon">
                                 <i class="fas fa-hand-holding-heart"></i>
                             </div>
-                            <h3 class="ul-donation-option-title">Don sur le compte de l'ONG RACED</h3>
+                            <h3 class="ul-donation-option-title">Don sur le compte de RACED</h3>
                         </div>
                         <div class="ul-donation-option-content">
                             <p>Vous versez votre don sur le compte de l'ONG RACED:</p>
                             <div class="ul-donation-account">
-                                <span>N° XXXXXXX</span>
+                            @if(isset($settings) && $settings->bank_number)
+                                <span> N° {{ $settings->bank_number }}</span>
+                            @endif
+                                
                             </div>
                             <p>Votre participation, aussi modeste soit-elle, constitue le meilleur soutien pour la poursuite de nos projets.</p>
                             <p>Vous bénéficiez d'une déduction fiscale à partir de 40 euros de dons par an. Une attestation fiscale vous sera envoyée dès votre premier trimestre suivant l'année de votre don/vos dons.</p>
@@ -140,9 +143,13 @@
     </div>
 </section>
 <!-- Donation Impact Section End -->
- <!-- Partenaires -->
-@include('frontend.layouts.partials.partners') 
-
+<!-- DYNAMIC SECTIONS START -->
+@if(isset($pageSections) && count($pageSections) > 0)
+    @foreach($pageSections as $pageSection)
+        <x-dynamic-section :pageSection="$pageSection" />
+    @endforeach
+@endif
+<!-- DYNAMIC SECTIONS END -->
 <style>
 /* Donation Page Styles */
 .ul-donation-intro {

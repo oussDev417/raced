@@ -43,15 +43,35 @@ class NewsController extends Controller
         $gallery = Galerie::latest()->get();
         $galleryCategories = GalerieCategory::with('galeries')->get();
 
-        return view('frontend.news.index', compact(
-            'settings',
-            'categories',
-            'news',
-            'recentNews',
-            'partners',
-            'gallery',
-            'galleryCategories'
-        ));
+        // Récupérer la page "Actualités" depuis la base de données
+        $page = \App\Models\Page::where('slug', 'actualites')->first();
+        
+        // Récupérer les sections de la page en utilisant le service de cache
+        $pageSections = [];
+        if ($page) {
+            $pageSections = \App\Services\SectionCacheService::getSections($page->id);
+        }
+        
+        // Récupérer toutes les données communes des sections depuis le cache
+        $cachedData = \App\Services\SectionCacheService::getSectionData();
+
+        // Combiner toutes les données pour la vue
+        $viewData = array_merge(
+            [
+                'settings' => $settings,
+                'categories' => $categories,
+                'news' => $news,
+                'recentNews' => $recentNews,
+                'partners' => $partners,
+                'gallery' => $gallery,
+                'galleryCategories' => $galleryCategories,
+                'page' => $page,
+                'pageSections' => $pageSections
+            ],
+            $cachedData
+        );
+
+        return view('frontend.news.index', $viewData);
     }
 
     /**

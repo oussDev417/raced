@@ -39,6 +39,7 @@ class SettingController extends Controller
             'footer_text' => 'nullable|string',
             'contact_email' => 'nullable|email|max:255',
             'contact_phone' => 'nullable|string|max:20',
+            'bank_number' => 'nullable|string|max:20',
             'contact_address' => 'nullable|string',
             'google_maps' => 'nullable|string',
             'contact_hours' => 'nullable|string',

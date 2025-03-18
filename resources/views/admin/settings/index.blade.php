@@ -149,7 +149,17 @@
                                 </div>
                             </div>
                         </div>
-                        
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="bank_number" class="form-label">Numéro bancaire</label>
+                                    <input type="text" class="form-control @error('bank_number') is-invalid @enderror" id="bank_number" name="bank_number" value="{{ old('bank_number', $settings->bank_number ?? '') }}">
+                                    @error('bank_number')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
                         <div class="row mb-3">
                             <div class="col-md-12">
                                 <div class="form-group">

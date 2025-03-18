@@ -25,12 +25,32 @@ class ProjectController extends Controller
         // Récupérer les projets récents pour la sidebar
         $recentProjects = Project::latest()->take(5)->get();
 
-        return view('frontend.projects.index', compact(
-            'settings',
-            'projects',
-            'partners',
-            'recentProjects'
-        ));
+        // Récupérer la page "Projets" depuis la base de données
+        $page = \App\Models\Page::where('slug', 'projets')->first();
+        
+        // Récupérer les sections de la page en utilisant le service de cache
+        $pageSections = [];
+        if ($page) {
+            $pageSections = \App\Services\SectionCacheService::getSections($page->id);
+        }
+        
+        // Récupérer toutes les données communes des sections depuis le cache
+        $cachedData = \App\Services\SectionCacheService::getSectionData();
+
+        // Combiner toutes les données pour la vue
+        $viewData = array_merge(
+            [
+                'settings' => $settings,
+                'projects' => $projects,
+                'partners' => $partners,
+                'recentProjects' => $recentProjects,
+                'page' => $page,
+                'pageSections' => $pageSections
+            ],
+            $cachedData
+        );
+
+        return view('frontend.projects.index', $viewData);
     }
 
     /**

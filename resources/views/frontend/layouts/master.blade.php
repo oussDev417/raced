@@ -38,6 +38,7 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/animate-wow/animate.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendor/flatpickr/flatpickr.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/custom-menus.css') }}">
     
     <!-- Additional CSS -->
     @yield('styles')

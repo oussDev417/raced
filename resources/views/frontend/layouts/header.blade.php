@@ -11,7 +11,10 @@
         <button class="ul-sidebar-closer"><i class="flaticon-close"></i></button>
     </div>
 
-    <div class="ul-sidebar-header-nav-wrapper d-block d-lg-none"></div>
+    <div class="ul-sidebar-header-nav-wrapper d-block d-lg-none">
+        <!-- Menu mobile -->
+        <x-menu location="mobile" class="ul-mobile-nav" />
+    </div>
 
     <!-- sidebar footer -->
     <div class="ul-sidebar-footer">
@@ -103,13 +106,8 @@
             <div class="ul-header-nav-wrapper">
                 <div class="to-go-to-sidebar-in-mobile">
                     <nav class="ul-header-nav">
-                        <a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'active' : '' }}">Accueil</a>
-                        <a href="{{ route('about') }}" class="{{ request()->routeIs('about') ? 'active' : '' }}">A propos</a>
-                        <a href="{{ route('axes') }}" class="{{ request()->routeIs('opportunites') ? 'active' : '' }}">Nos opportunités</a>
-                        <a href="{{ route('projects.index') }}" class="{{ request()->routeIs('projects.*') ? 'active' : '' }}">Nos projets</a>
-                        <a href="{{ route('news.index') }}" class="{{ request()->routeIs('news.*') ? 'active' : '' }}">Nos actualités</a>
-                        <a href="{{ route('contact') }}" class="{{ request()->routeIs('contact') ? 'active' : '' }}">Nous contacter</a>
-                        <a href="{{ route('donation') }}" class="{{ request()->routeIs('donation') ? 'active' : '' }}">Nous soutenir</a>
+                        <!-- Menu principal dynamique -->
+                        <x-menu location="header" />
                     </nav>
                 </div>
             </div>

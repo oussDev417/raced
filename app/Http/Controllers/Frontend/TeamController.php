@@ -18,6 +18,33 @@ class TeamController extends Controller
         $equipeCategories = EquipeCategory::with('equipes')->get();
         $partners = Partner::latest()->get();
         $settings = Setting::first();
-        return view('frontend.team.index', compact('categories', 'equipes', 'equipeCategories', 'partners', 'settings'));
+
+        // Récupérer la page "Équipes" depuis la base de données
+        $page = \App\Models\Page::where('slug', 'equipe')->first();
+        
+        // Récupérer les sections de la page en utilisant le service de cache
+        $pageSections = [];
+        if ($page) {
+            $pageSections = \App\Services\SectionCacheService::getSections($page->id);
+        }
+        
+        // Récupérer toutes les données communes des sections depuis le cache
+        $cachedData = \App\Services\SectionCacheService::getSectionData();
+
+        // Combiner toutes les données pour la vue
+        $viewData = array_merge(
+            [
+                'categories' => $categories, 
+                'equipes' => $equipes, 
+                'equipeCategories' => $equipeCategories, 
+                'partners' => $partners, 
+                'settings' => $settings,
+                'page' => $page,
+                'pageSections' => $pageSections
+            ],
+            $cachedData
+        );
+
+        return view('frontend.team.index', $viewData);
     }
 }

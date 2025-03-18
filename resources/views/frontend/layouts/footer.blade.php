@@ -89,10 +89,8 @@
                     <h3 class="ul-footer-widget-title">Liens Rapides</h3>
 
                     <div class="ul-footer-widget-links">
-                        <a href="{{ route('home') }}">Accueil</a>
-                        <a href="{{ route('about') }}">À Propos</a>
-                        <a href="{{ route('news.index') }}">Actualités</a>
-                        <a href="{{ route('contact') }}">Contactez-nous</a>
+                        <!-- Menu footer dynamique -->
+                        <x-menu location="footer" />
                     </div>
                 </div>
 

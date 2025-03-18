@@ -19,11 +19,14 @@
     <!-- Quill CSS -->
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
     
+    <!-- Toastr CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ asset('assets/admin/css/style.css') }}">
     
     <!-- Additional CSS -->
-    @yield('styles')
+    @stack('styles')
 
     <style>
         .wrapper {
@@ -67,6 +70,19 @@
         .ql-editor {
             min-height: 200px;
         }
+        /* Styles personnalisés */
+        .nav-section-title {
+            margin-top: 20px;
+            margin-bottom: 10px;
+            padding-left: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #6c757d;
+            letter-spacing: 0.5px;
+            pointer-events: none;
+            border-left: 3px solid #2e90a7;
+        }
     </style>
 </head>
 <body>
@@ -101,11 +117,14 @@
     <!-- Quill JS -->
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
     
+    <!-- Toastr JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    
     <!-- Custom JS -->
     <script src="{{ asset('assets/admin/js/script.js') }}"></script>
     
     <!-- Additional JS -->
-    @yield('scripts')
+    @stack('scripts')
 
     <script>
         // Configuration globale de Quill

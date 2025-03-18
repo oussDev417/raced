@@ -23,6 +23,7 @@ class Setting extends Model
         'contact_email',
         'contact_phone',
         'contact_address',
+        'bank_number',
         'google_maps',
         'contact_hours',
         'facebook_url',

@@ -27,6 +27,18 @@ class AboutController extends Controller
         // Récupérer les informations de la section À propos
         $about = About::first();
 
+        // Récupérer la page "À propos" depuis la base de données
+        $page = \App\Models\Page::where('slug', 'a-propos')->first();
+        
+        // Récupérer les sections de la page en utilisant le service de cache
+        $pageSections = [];
+        if ($page) {
+            $pageSections = \App\Services\SectionCacheService::getSections($page->id);
+        }
+        
+        // Récupérer toutes les données communes des sections depuis le cache
+        $cachedData = \App\Services\SectionCacheService::getSectionData();
+
         // Récupérer les axes d'intervention
         $axes = Axe::latest()->get();
 
@@ -48,17 +60,25 @@ class AboutController extends Controller
         // Récupérer les partenaires
         $partners = Partner::latest()->get();
 
-        return view('frontend.about.index', compact(
-            'settings',
-            'about',
-            'axes',
-            'funFacts',
-            'statFacts',
-            'equipeCategories',
-            'partners',
-            'equipes',
-            'testimonials'
-        ));
+        // Combinaison des données pour la vue
+        $viewData = array_merge(
+            [
+                'settings' => $settings,
+                'about' => $about,
+                'page' => $page,
+                'pageSections' => $pageSections,
+                'axes' => $axes,
+                'funFacts' => $funFacts,
+                'statFacts' => $statFacts,
+                'equipeCategories' => $equipeCategories,
+                'equipes' => $equipes,
+                'testimonials' => $testimonials,
+                'partners' => $partners
+            ],
+            $cachedData
+        );
+
+        return view('frontend.about.index', $viewData);
     }
 
     /**

@@ -75,4 +75,12 @@
 </section>
 <!-- PROJECTS SECTION END -->
 
+<!-- DYNAMIC SECTIONS START -->
+@if(isset($pageSections) && count($pageSections) > 0)
+    @foreach($pageSections as $pageSection)
+        <x-dynamic-section :pageSection="$pageSection" />
+    @endforeach
+@endif
+<!-- DYNAMIC SECTIONS END -->
+
 @endsection 

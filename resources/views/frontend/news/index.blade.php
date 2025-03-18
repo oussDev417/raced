@@ -165,8 +165,9 @@
     </div>
 </div>
 
-<!-- GALLERY SECTION START -->
-@include('frontend.layouts.partials.gallery')
-<!-- GALLERY SECTION END -->
-
+@if(isset($pageSections) && count($pageSections) > 0)
+    @foreach($pageSections as $pageSection)
+        <x-dynamic-section :pageSection="$pageSection" />
+    @endforeach
+@endif
 @endsection 

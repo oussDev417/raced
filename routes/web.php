@@ -154,6 +154,54 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // Profile
         Route::get('/profile/edit', [UserController::class, 'editProfile'])->name('profile.edit');
         Route::put('/profile/update', [UserController::class, 'updateProfile'])->name('profile.update');
+
+        // Routes pour les pages
+        Route::resource('pages', 'App\Http\Controllers\Admin\PageController');
+        
+        // Routes pour les sections d'une page
+        Route::group(['prefix' => 'pages/{page}'], function () {
+            Route::get('sections', [\App\Http\Controllers\Admin\PageSectionController::class, 'index'])->name('page_sections.index');
+            Route::get('sections/create', [\App\Http\Controllers\Admin\PageSectionController::class, 'create'])->name('page_sections.create');
+            Route::post('sections', [\App\Http\Controllers\Admin\PageSectionController::class, 'store'])->name('page_sections.store');
+            Route::get('sections/{pageSection}', [\App\Http\Controllers\Admin\PageSectionController::class, 'show'])->name('page_sections.show');
+            Route::get('sections/{pageSection}/edit', [\App\Http\Controllers\Admin\PageSectionController::class, 'edit'])->name('page_sections.edit');
+            Route::put('sections/{pageSection}', [\App\Http\Controllers\Admin\PageSectionController::class, 'update'])->name('page_sections.update');
+            Route::delete('sections/{pageSection}', [\App\Http\Controllers\Admin\PageSectionController::class, 'destroy'])->name('page_sections.destroy');
+            Route::post('sections/order', [\App\Http\Controllers\Admin\PageSectionController::class, 'updateOrder'])->name('page_sections.order');
+            Route::put('sections/{pageSection}/toggle', [\App\Http\Controllers\Admin\PageSectionController::class, 'toggleActive'])->name('page_sections.toggle');
+        });
+        
+        // Routes pour les types de sections
+        Route::resource('sections', 'App\Http\Controllers\Admin\SectionController');
+        Route::put('sections/{section}/toggle', [\App\Http\Controllers\Admin\SectionController::class, 'toggleActive'])->name('sections.toggle');
+        
+        // Routes pour les menus
+        Route::resource('menus', 'App\Http\Controllers\Admin\MenuController');
+        Route::get('menus/{menu}/builder', [\App\Http\Controllers\Admin\MenuController::class, 'builder'])->name('menus.builder');
+        Route::post('menus/{menu}/update-order', [\App\Http\Controllers\Admin\MenuController::class, 'updateOrder'])->name('menus.update_order');
+        
+        // Routes pour les éléments de menu
+        Route::group(['prefix' => 'menus/{menu}'], function () {
+            Route::get('items', [\App\Http\Controllers\Admin\MenuItemController::class, 'index'])->name('menu_items.index');
+            Route::get('items/create', [\App\Http\Controllers\Admin\MenuItemController::class, 'create'])->name('menu_items.create');
+            Route::post('items', [\App\Http\Controllers\Admin\MenuItemController::class, 'store'])->name('menu_items.store');
+            Route::get('items/{menuItem}', [\App\Http\Controllers\Admin\MenuItemController::class, 'show'])->name('menu_items.show');
+            Route::get('items/{menuItem}/edit', [\App\Http\Controllers\Admin\MenuItemController::class, 'edit'])->name('menu_items.edit');
+            Route::put('items/{menuItem}', [\App\Http\Controllers\Admin\MenuItemController::class, 'update'])->name('menu_items.update');
+            Route::delete('items/{menuItem}', [\App\Http\Controllers\Admin\MenuItemController::class, 'destroy'])->name('menu_items.destroy');
+            Route::post('items/order', [\App\Http\Controllers\Admin\MenuItemController::class, 'updateOrder'])->name('menu_items.order');
+            Route::put('items/{menuItem}/toggle', [\App\Http\Controllers\Admin\MenuItemController::class, 'toggleActive'])->name('menu_items.toggle');
+        });
+
+        // Routes pour les rapports
+        Route::resource('reports', \App\Http\Controllers\Admin\ReportController::class)->names('reports');
+        Route::get('reports/{report}/toggle-active', [\App\Http\Controllers\Admin\ReportController::class, 'toggleActive'])->name('reports.toggle-active');
+        Route::post('reports/update-order', [\App\Http\Controllers\Admin\ReportController::class, 'updateOrder'])->name('reports.update-order');
+
+        // Routes pour les sections génériques
+        Route::resource('generic-sections', 'App\Http\Controllers\Admin\GenericSectionController')->names('generic_sections');
+        Route::get('generic-sections/{genericSection}/toggle-active', 'App\Http\Controllers\Admin\GenericSectionController@toggleActive')->name('generic_sections.toggle-active');
+        Route::post('generic-sections/update-order', 'App\Http\Controllers\Admin\GenericSectionController@updateOrder')->name('generic_sections.update-order');
     });
 });
 
@@ -335,3 +383,10 @@ Route::view('weather_icon', 'weather_icon')->name('weather_icon');
 Route::view('widget', 'widget')->name('widget');
 Route::view('wishlist', 'wishlist')->name('wishlist');
 Route::view('wrapper', 'wrapper')->name('wrapper');
+
+// Routes pour les pages frontend
+Route::get('/', [\App\Http\Controllers\Frontend\PageController::class, 'home'])->name('home');
+
+// Route générique pour toutes les pages dynamiques
+// Attention: cette route doit être placée à la fin pour éviter de capturer d'autres routes
+Route::get('{slug}', [\App\Http\Controllers\Frontend\PageController::class, 'show'])->name('page.show')->where('slug', '[a-z0-9-]+');

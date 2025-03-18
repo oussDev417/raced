@@ -97,16 +97,12 @@
 </section>
 <!-- MISSION, VISION, HISTORY SECTION END -->
 
-<!-- TEAM SECTION START -->
-@include('frontend.layouts.partials.team')
-<!-- TEAM SECTION END -->
-
-<!-- TESTIMONIAL SECTION START -->
-@include('frontend.layouts.partials.testimonial')
-<!-- TESTIMONIAL SECTION END -->
-
-
-<!-- PARTNERS SECTION START -->
- @include('frontend.layouts.partials.partners')
+<!-- DYNAMIC SECTIONS START -->
+@if(isset($pageSections) && count($pageSections) > 0)
+    @foreach($pageSections as $pageSection)
+        <x-dynamic-section :pageSection="$pageSection" />
+    @endforeach
+@endif
+<!-- DYNAMIC SECTIONS END -->
 
 @endsection 

@@ -5,10 +5,18 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BenevoleRequest;
 use App\Http\Requests\ContactRequest;
+use App\Models\About;
+use App\Models\Axe;
+use App\Models\Equipe;
+use App\Models\FunFact;
+use App\Models\Stat;
 use App\Models\Benevole;
 use App\Models\Contact;
 use App\Models\Setting;
 use App\Models\Partner;
+use App\Models\EquipeCategory;
+use App\Models\StatFact;
+use App\Models\Testimonial;
 use Illuminate\Http\Request;
 use App\Models\Newsletter;
 class ContactController extends Controller
@@ -53,9 +61,59 @@ class ContactController extends Controller
 
     public function donation()
     {
+        // Récupérer la page "À propos" depuis la base de données
+        $page = \App\Models\Page::where('slug', 'donation')->first();
+                
+        // Récupérer les sections de la page en utilisant le service de cache
+        $pageSections = [];
+        if ($page) {
+            $pageSections = \App\Services\SectionCacheService::getSections($page->id);
+        }
+        
+        // Récupérer toutes les données communes des sections depuis le cache
+        $cachedData = \App\Services\SectionCacheService::getSectionData();
+
+        $about = About::first();
+
+        // Récupérer les axes d'intervention
+        $axes = Axe::latest()->get();
+
+        // Récupérer les fun facts
+        $funFacts = FunFact::latest()->get();
+
+        // Récupérer les statistiques
+        $statFacts = StatFact::latest()->get();
+
+        // Récupérer les équipes
+        $equipes = Equipe::all();
+
+        // Récupérer les témoignages
+        $testimonials = Testimonial::all();
+
+        // Récupérer les catégories d'équipe avec leurs membres
+        $equipeCategories = EquipeCategory::with('equipes')->get();
+
         $partners = Partner::all();
         $settings = Setting::first();
-        return view('frontend.donation.index', compact('settings', 'partners'));
+        // Combinaison des données pour la vue
+        $viewData = array_merge(
+            [
+                'settings' => $settings,
+                'about' => $about,
+                'page' => $page,
+                'pageSections' => $pageSections,
+                'axes' => $axes,
+                'funFacts' => $funFacts,
+                'statFacts' => $statFacts,
+                'equipeCategories' => $equipeCategories,
+                'equipes' => $equipes,
+                'testimonials' => $testimonials,
+                'partners' => $partners
+            ],
+            $cachedData
+        );
+
+        return view('frontend.donation.index',$viewData);
     }
 
     /**

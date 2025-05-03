@@ -112,11 +112,26 @@
             </li>
             
             <!-- Rapports -->
-            <li class="nav-item {{ request()->routeIs('admin.reports.*') ? 'active' : '' }}">
-                <a href="{{ route('admin.reports.index') }}" class="nav-link">
+            <li class="nav-item {{ request()->routeIs('admin.reports.*') || request()->routeIs('admin.report-categories.*') ? 'active' : '' }}">
+                <a href="#" class="nav-link has-dropdown" data-bs-toggle="collapse" data-bs-target="#reportsDropdown">
                     <i class="fas fa-file-pdf"></i>
                     <span>Rapports</span>
+                    <i class="fas fa-chevron-down dropdown-icon"></i>
                 </a>
+                <ul class="collapse nav-dropdown-list {{ request()->routeIs('admin.reports.*') || request()->routeIs('admin.report-categories.*') ? 'show' : '' }}" id="reportsDropdown">
+                    <li class="nav-dropdown-item {{ request()->routeIs('admin.reports.*') ? 'active' : '' }}">
+                        <a href="{{ route('admin.reports.index') }}" class="nav-dropdown-link">
+                            <i class="fas fa-file-pdf"></i>
+                            <span>Rapports</span>
+                        </a>
+                    </li>
+                    <li class="nav-dropdown-item {{ request()->routeIs('admin.report-categories.*') ? 'active' : '' }}">
+                        <a href="{{ route('admin.report-categories.index') }}" class="nav-dropdown-link">
+                            <i class="fas fa-tags"></i>
+                            <span>Catégories</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
             
             <!-- Médias -->

@@ -9,6 +9,7 @@ use App\Models\Equipe;
 use App\Models\EquipeCategory;
 use App\Models\FunFact;
 use App\Models\Galerie;
+use App\Models\GalerieCategory;
 use App\Models\Setting;
 use App\Models\Slider;
 use App\Models\News;
@@ -57,6 +58,9 @@ class HomeController extends Controller
         // Récupérer les images de la galerie
         $galeries = Galerie::latest()->take(8)->get();
 
+        $galerieCategories = GalerieCategory::with('galeries')->get();
+
+
         return view('frontend.home.index', compact(
             'settings',
             'sliders',
@@ -68,7 +72,8 @@ class HomeController extends Controller
             'news',
             'equipeCategories',
             'partners',
-            'galeries'
+            'galeries',
+            'galerieCategories'
         ));
     }
 }

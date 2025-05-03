@@ -85,7 +85,7 @@
             <div class="tab-navs ul-about-tabs-nav">
                 <button class="tab-nav active" data-tab="tab-mission">Nos Missions</button>
                 <button class="tab-nav" data-tab="tab-vision">Nos Visions</button>
-                <button class="tab-nav" data-tab="tab-history">Notre Histoire</button>
+                <button class="tab-nav" data-tab="tab-history">@if(isset($about) && $about->title){{ $about->title }}@else Historique @endif</button>
             </div>
         </div>
 

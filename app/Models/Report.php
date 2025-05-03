@@ -21,7 +21,8 @@ class Report extends Model
         'pdf_file',
         'publication_date',
         'active',
-        'order'
+        'order',
+        'report_category_id',
     ];
 
     /**
@@ -34,4 +35,9 @@ class Report extends Model
         'active' => 'boolean',
         'order' => 'integer',
     ];
+
+    public function category()
+    {
+        return $this->belongsTo(ReportCategory::class, 'report_category_id');
+    }
 }

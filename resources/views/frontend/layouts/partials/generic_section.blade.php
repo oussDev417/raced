@@ -66,7 +66,7 @@
                             </div>
                         @endif
                         
-                        @if($sectionButtonText && $sectionButtonUrl)
+                        @if(!empty($sectionButtonText) && !empty($sectionButtonUrl))
                             <div class="mt-4">
                                 <a href="{{ $sectionButtonUrl }}" class="ul-btn">
                                     <i class="flaticon-fast-forward-double-right-arrows-symbol"></i> {{ $sectionButtonText }}

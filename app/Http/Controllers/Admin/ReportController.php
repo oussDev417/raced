@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Report;
+use App\Models\ReportCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -23,7 +24,8 @@ class ReportController extends Controller
      */
     public function create()
     {
-        return view('admin.reports.create');
+        $categories = ReportCategory::where('active', true)->get();
+        return view('admin.reports.create', compact('categories'));
     }
 
     /**
@@ -31,35 +33,32 @@ class ReportController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'publication_date' => 'nullable|date',
-            'image' => 'nullable|image|max:2048',
-            'pdf_file' => 'nullable|file|mimes:pdf|max:10240',
-            'active' => 'boolean'
+            'report_category_id' => 'nullable|exists:report_categories,id',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'pdf_file' => 'nullable|mimes:pdf|max:10240',
+            'active' => 'nullable|boolean',
         ]);
 
-        // Gestion de l'ordre
-        $maxOrder = Report::max('order') ?? 0;
-        $validated['order'] = $maxOrder + 1;
+        // Création du rapport
+        $report = Report::create($validatedData);
 
-        // Gestion de l'image
+        // Gestion des fichiers (image et PDF)
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('reports/images', 'public');
-            $validated['image'] = $imagePath;
+            $report->image = $request->file('image')->store('reports/images', 'public');
         }
 
-        // Gestion du fichier PDF
         if ($request->hasFile('pdf_file')) {
-            $pdfPath = $request->file('pdf_file')->store('reports/files', 'public');
-            $validated['pdf_file'] = $pdfPath;
+            $report->pdf_file = $request->file('pdf_file')->store('reports/pdf', 'public');
         }
 
-        Report::create($validated);
+        $report->save();
 
         return redirect()->route('admin.reports.index')
-            ->with('success', 'Rapport créé avec succès.');
+            ->with('success', 'Rapport ajouté avec succès.');
     }
 
     /**
@@ -75,7 +74,8 @@ class ReportController extends Controller
      */
     public function edit(Report $report)
     {
-        return view('admin.reports.edit', compact('report'));
+        $categories = ReportCategory::where('active', true)->get();
+        return view('admin.reports.edit', compact('report', 'categories'));
     }
 
     /**
@@ -83,36 +83,29 @@ class ReportController extends Controller
      */
     public function update(Request $request, Report $report)
     {
-        $validated = $request->validate([
+        $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'publication_date' => 'nullable|date',
-            'image' => 'nullable|image|max:2048',
-            'pdf_file' => 'nullable|file|mimes:pdf|max:10240',
-            'active' => 'boolean'
+            'report_category_id' => 'nullable|exists:report_categories,id',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'pdf_file' => 'nullable|mimes:pdf|max:10240',
+            'active' => 'nullable|boolean',
         ]);
 
-        // Gestion de l'image
+        // Mise à jour du rapport
+        $report->update($validatedData);
+
+        // Gestion des fichiers (image et PDF)
         if ($request->hasFile('image')) {
-            // Supprimer l'ancienne image si elle existe
-            if ($report->image) {
-                Storage::disk('public')->delete($report->image);
-            }
-            $imagePath = $request->file('image')->store('reports/images', 'public');
-            $validated['image'] = $imagePath;
+            $report->image = $request->file('image')->store('reports/images', 'public');
         }
 
-        // Gestion du fichier PDF
         if ($request->hasFile('pdf_file')) {
-            // Supprimer l'ancien fichier PDF s'il existe
-            if ($report->pdf_file) {
-                Storage::disk('public')->delete($report->pdf_file);
-            }
-            $pdfPath = $request->file('pdf_file')->store('reports/files', 'public');
-            $validated['pdf_file'] = $pdfPath;
+            $report->pdf_file = $request->file('pdf_file')->store('reports/pdf', 'public');
         }
 
-        $report->update($validated);
+        $report->save();
 
         return redirect()->route('admin.reports.index')
             ->with('success', 'Rapport mis à jour avec succès.');

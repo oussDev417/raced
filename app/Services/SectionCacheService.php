@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Page;
 use App\Models\PageSection;
 use App\Models\Section;
+use App\Models\FunFact;
 use Illuminate\Support\Facades\Cache;
 
 class SectionCacheService
@@ -50,9 +51,11 @@ class SectionCacheService
                 'projects' => \App\Models\Project::latest()->take(6)->get(),
                 'partners' => \App\Models\Partner::latest()->get(),
                 'statFacts' => \App\Models\StatFact::latest()->get(),
+                'funFacts' => \App\Models\FunFact::latest()->get(),
                 'axes' => \App\Models\Axe::latest()->get(),
                 'testimonials' => \App\Models\Testimonial::latest()->get(),
-                'galeries' => \App\Models\Galerie::latest()->take(8)->get(),
+                'galeries' => \App\Models\Galerie::with('category')->latest()->take(8)->get(),
+                'galerieCategories' => \App\Models\GalerieCategory::with('galeries')->get(),
                 'settings' => \App\Models\Setting::first(),
             ];
         });

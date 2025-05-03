@@ -12,8 +12,7 @@
     </div>
 
     <div class="ul-sidebar-header-nav-wrapper d-block d-lg-none">
-        <!-- Menu mobile -->
-        <x-menu location="mobile" class="ul-mobile-nav" />
+        <!-- Le contenu du menu sera injecté ici par JavaScript -->
     </div>
 
     <!-- sidebar footer -->

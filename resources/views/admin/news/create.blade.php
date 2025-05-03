@@ -123,33 +123,61 @@
 </div>
 @endsection
 
-@section('scripts')
+@section('editor_scripts')
+<!-- CKEditor -->
+<script src="https://cdn.ckeditor.com/4.22.1/full/ckeditor.js"></script>
 <script>
-document.addEventListener('DOMContentLoaded', function() {  
-    // Initialisation de l'éditeur Quill pour la description détaillée
-    const descriptionEditor = initQuillEditor('#description_editor', 'Entrez la description détaillée...');
-    
-    // Mise à jour du champ caché avant la soumission du formulaire
-    document.getElementById('newsForm').addEventListener('submit', function() {
-        document.getElementById('description_input').value = descriptionEditor.root.innerHTML;
-    });
+document.addEventListener('DOMContentLoaded', function() {
+    // Configuration de CKEditor
+    const editorConfig = {
+        height: '400px',
+        language: 'fr',
+        toolbar: [
+            ['Source'],
+            ['Cut', 'Copy', 'Paste', 'PasteText', '-', 'Undo', 'Redo'],
+            ['Find', 'Replace'],
+            '/',
+            ['Bold', 'Italic', 'Underline', 'Strike', '-', 'Subscript', 'Superscript'],
+            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', 'Blockquote'],
+            ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+            ['Link', 'Unlink'],
+            ['Image', 'Table', 'HorizontalRule', 'SpecialChar'],
+            '/',
+            ['Styles', 'Format', 'Font', 'FontSize'],
+            ['TextColor', 'BGColor'],
+            ['Maximize', 'ShowBlocks']
+        ],
+        removePlugins: 'elementspath',
+        allowedContent: true,
+        entities: false
+    };
+
+    // Initialisation de l'éditeur
+    if (document.getElementById('description')) {
+        const editor = CKEDITOR.replace('description', editorConfig);
+        
+        // Mise à jour du champ caché avant la soumission du formulaire
+        document.getElementById('newsForm').addEventListener('submit', function() {
+            document.getElementById('description_input').value = editor.getData();
+        });
+    }
 
     // Prévisualisation de l'image
     const imageInput = document.getElementById('thumbnail');
     const previewImage = document.getElementById('preview');
 
-    imageInput.addEventListener('change', function() {
-        if (this.files && this.files[0]) {
-            const reader = new FileReader();
-            
-            reader.onload = function(e) {
-                previewImage.src = e.target.result;
-                previewImage.style.display = 'block';
+    if (imageInput && previewImage) {
+        imageInput.addEventListener('change', function() {
+            if (this.files && this.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImage.src = e.target.result;
+                    previewImage.style.display = 'block';
+                }
+                reader.readAsDataURL(this.files[0]);
             }
-            
-            reader.readAsDataURL(this.files[0]);
-        }
-    });
+        });
+    }
 
     // Génération automatique du slug
     const titleInput = document.getElementById('title');
@@ -179,4 +207,26 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
+@endsection
+
+@section('styles')
+<style>
+    .cke_chrome {
+        border: 1px solid #ddd !important;
+        border-radius: 4px !important;
+        margin-bottom: 1rem !important;
+    }
+    .cke_top {
+        background: #f8f9fa !important;
+        border-bottom: 1px solid #ddd !important;
+        padding: 8px !important;
+    }
+    .cke_bottom {
+        background: #f8f9fa !important;
+        border-top: 1px solid #ddd !important;
+    }
+    .cke_contents {
+        padding: 10px !important;
+    }
+</style>
 @endsection 

@@ -30,6 +30,7 @@
                             <th style="width: 50px;"></th>
                             <th>Image</th>
                             <th>Titre</th>
+                            <th>Catégorie</th>
                             <th>Date de publication</th>
                             <th>Statut</th>
                             <th>Actions</th>
@@ -51,6 +52,7 @@
                                     @endif
                                 </td>
                                 <td>{{ $report->title }}</td>
+                                <td>{{ $report->category->name ?? 'Aucune catégorie' }}</td>
                                 <td>{{ $report->publication_date ? $report->publication_date->format('d/m/Y') : 'Non définie' }}</td>
                                 <td>
                                     <span class="badge bg-{{ $report->active ? 'success' : 'danger' }}">

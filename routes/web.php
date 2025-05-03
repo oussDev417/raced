@@ -202,6 +202,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('generic-sections', 'App\Http\Controllers\Admin\GenericSectionController')->names('generic_sections');
         Route::get('generic-sections/{genericSection}/toggle-active', 'App\Http\Controllers\Admin\GenericSectionController@toggleActive')->name('generic_sections.toggle-active');
         Route::post('generic-sections/update-order', 'App\Http\Controllers\Admin\GenericSectionController@updateOrder')->name('generic_sections.update-order');
+
+        // Routes pour les catégories de rapports
+        Route::resource('report-categories', \App\Http\Controllers\Admin\ReportCategoryController::class)->names('report-categories');
+        Route::post('report-categories/update-order', [\App\Http\Controllers\Admin\ReportCategoryController::class, 'updateOrder'])->name('report-categories.update-order');
+        Route::get('report-categories/{category}/toggle-active', [\App\Http\Controllers\Admin\ReportCategoryController::class, 'toggleActive'])->name('report-categories.toggle-active');
     });
 });
 

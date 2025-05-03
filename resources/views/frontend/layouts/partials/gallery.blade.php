@@ -10,14 +10,14 @@
         <div class="ul-gallery-filter">
             <ul class="ul-gallery-filter-nav">
                 <li class="active" data-filter="*">Tout</li>
-                @foreach($galleryCategories as $category)
+                @foreach($galerieCategories as $category)
                     <li data-filter=".{{ Str::slug($category->name) }}">{{ $category->name }}</li>
                 @endforeach
             </ul>
         </div>
         
         <div class="ul-gallery-grid">
-            @foreach($gallery as $item)
+            @foreach($galeries as $item)
                 <div class="ul-gallery-item {{ Str::slug($item->category->name) }}">
                     <div class="ul-gallery-item-inner">
                         @if($item->path)

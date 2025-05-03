@@ -111,6 +111,7 @@ class DynamicSection extends Component
             case 'gallery':
                 // Récupérer les données pour la section "Galerie"
                 $viewData['galeries'] = $cachedData['galeries'];
+                $viewData['galerieCategories'] = $cachedData['galerieCategories'];
                 break;
                 
             case 'feature':

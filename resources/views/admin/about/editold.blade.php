@@ -54,10 +54,7 @@
 
                         <div class="mb-3">
                             <label for="description" class="form-label">Description détaillée <span class="text-danger">*</span></label>
-                            <input type="hidden" name="description" id="description_input">
-                            <div id="description_editor">
-                                {!! old('description', $about->description) !!}
-                            </div>
+                            <textarea name="description" id="description" class="form-control">{!! old('description', $about->description) !!}</textarea>
                             @error('description')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -65,10 +62,7 @@
 
                         <div class="mb-3">
                             <label for="mission" class="form-label">Notre mission</label>
-                            <input type="hidden" name="mission" id="mission_input">
-                            <div id="mission_editor">
-                                {!! old('mission', $about->mission) !!}
-                            </div>
+                            <textarea name="mission" id="mission" class="form-control">{!! old('mission', $about->mission) !!}</textarea>
                             @error('mission')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -76,10 +70,7 @@
 
                         <div class="mb-3">
                             <label for="vision" class="form-label">Notre vision</label>
-                            <input type="hidden" name="vision" id="vision_input">
-                            <div id="vision_editor">
-                                {!! old('vision', $about->vision) !!}
-                            </div>
+                            <textarea name="vision" id="vision" class="form-control">{!! old('vision', $about->vision) !!}</textarea>
                             @error('vision')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -87,10 +78,7 @@
 
                         <div class="mb-3">
                             <label for="values" class="form-label">Nos valeurs</label>
-                            <input type="hidden" name="values" id="values_input">
-                            <div id="values_editor">
-                                {!! old('values', $about->values) !!}
-                            </div>
+                            <textarea name="values" id="values" class="form-control">{!! old('values', $about->values) !!}</textarea>
                             @error('values')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -159,57 +147,93 @@
 </div>
 @endsection
 
-@section('scripts')
-<script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+@section('editor_scripts')
+<!-- CKEditor -->
+<script src="https://cdn.ckeditor.com/4.22.1/full/ckeditor.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialisation des éditeurs Quill
-    const descriptionEditor = initQuillEditor('#description_editor', 'Entrez la description détaillée...');
-    const missionEditor = initQuillEditor('#mission_editor', 'Entrez la mission...');
-    const visionEditor = initQuillEditor('#vision_editor', 'Entrez la vision...');
-    const valuesEditor = initQuillEditor('#values_editor', 'Entrez les valeurs...');
+    const editorConfig = {
+        height: '300px',
+        language: 'fr',
+        toolbar: [
+            ['Source'],
+            ['Cut', 'Copy', 'Paste', 'PasteText', '-', 'Undo', 'Redo'],
+            ['Find', 'Replace'],
+            '/',
+            ['Bold', 'Italic', 'Underline', 'Strike', '-', 'Subscript', 'Superscript'],
+            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', 'Blockquote'],
+            ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+            ['Link', 'Unlink'],
+            ['Image', 'Table', 'HorizontalRule', 'SpecialChar'],
+            '/',
+            ['Styles', 'Format', 'Font', 'FontSize'],
+            ['TextColor', 'BGColor'],
+            ['Maximize', 'ShowBlocks']
+        ],
+        removePlugins: 'elementspath',
+        allowedContent: true,
+        entities: false
+    };
 
-    // Mise à jour des champs cachés avant la soumission du formulaire
-    document.getElementById('aboutForm').addEventListener('submit', function() {
-        document.getElementById('description_input').value = descriptionEditor.root.innerHTML;
-        document.getElementById('mission_input').value = missionEditor.root.innerHTML;
-        document.getElementById('vision_input').value = visionEditor.root.innerHTML;
-        document.getElementById('values_input').value = valuesEditor.root.innerHTML;
+    // Initialisation des éditeurs
+    ['description', 'mission', 'vision', 'values'].forEach(function(fieldId) {
+        if (document.getElementById(fieldId)) {
+            CKEDITOR.replace(fieldId, editorConfig);
+        }
     });
 
-    // Prévisualisation de l'image principale
+    // Code de prévisualisation des images
     const mainImageInput = document.getElementById('main_image');
     const mainPreviewImage = document.getElementById('preview');
-
-    mainImageInput.addEventListener('change', function() {
-        if (this.files && this.files[0]) {
-            const reader = new FileReader();
-            
-            reader.onload = function(e) {
-                mainPreviewImage.src = e.target.result;
-                mainPreviewImage.style.display = 'block';
+    if (mainImageInput && mainPreviewImage) {
+        mainImageInput.addEventListener('change', function() {
+            if (this.files && this.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    mainPreviewImage.src = e.target.result;
+                    mainPreviewImage.style.display = 'block';
+                }
+                reader.readAsDataURL(this.files[0]);
             }
-            
-            reader.readAsDataURL(this.files[0]);
-        }
-    });
+        });
+    }
 
-    // Prévisualisation de l'image secondaire
     const secondaryImageInput = document.getElementById('secondary_image');
     const secondaryPreviewImage = document.getElementById('preview2');
-
-    secondaryImageInput.addEventListener('change', function() {
-        if (this.files && this.files[0]) {
-            const reader = new FileReader();
-            
-            reader.onload = function(e) {
-                secondaryPreviewImage.src = e.target.result;
-                secondaryPreviewImage.style.display = 'block';
+    if (secondaryImageInput && secondaryPreviewImage) {
+        secondaryImageInput.addEventListener('change', function() {
+            if (this.files && this.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    secondaryPreviewImage.src = e.target.result;
+                    secondaryPreviewImage.style.display = 'block';
+                }
+                reader.readAsDataURL(this.files[0]);
             }
-            
-            reader.readAsDataURL(this.files[0]);
-        }
-    });
+        });
+    }
 });
 </script>
+@endsection
+
+@section('styles')
+<style>
+    .cke_chrome {
+        border: 1px solid #ddd !important;
+        border-radius: 4px !important;
+        margin-bottom: 1rem !important;
+    }
+    .cke_top {
+        background: #f8f9fa !important;
+        border-bottom: 1px solid #ddd !important;
+        padding: 8px !important;
+    }
+    .cke_bottom {
+        background: #f8f9fa !important;
+        border-top: 1px solid #ddd !important;
+    }
+    .cke_contents {
+        padding: 10px !important;
+    }
+</style>
 @endsection

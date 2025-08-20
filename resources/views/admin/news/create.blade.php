@@ -87,6 +87,16 @@
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
+
+                        <div class="mb-3">
+                            <label for="published_at" class="form-label">Date de publication <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control flatpickr @error('published_at') is-invalid @enderror" 
+                                   id="published_at" name="published_at" value="{{ old('published_at', now()->format('Y-m-d H:i')) }}" required>
+                            @error('published_at')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                            <small class="form-text text-muted">Sélectionnez la date et l'heure de publication.</small>
+                        </div>
                     </div>
 
                     <div class="col-md-4">

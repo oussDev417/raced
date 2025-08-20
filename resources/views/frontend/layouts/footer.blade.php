@@ -72,7 +72,9 @@
                         @endif
                     </div>
                     <div class="ul-footer-socials">
-                        
+                        @if($settings->mail_link ?? true)
+                            <a href="{{ $settings->mail_link ?? 'mailto:' . ($settings->contact_email ?? '') }}"><i class="flaticon-email"></i></a>
+                        @endif
                         @if($settings->tiktok ?? true)
                             <a href="{{ $settings->tiktok_url ?? 'https://www.tiktok.com/@racedong01' }}"><i class="fab fa-tiktok"></i></a>
                         @endif
@@ -107,7 +109,7 @@
 
                 <div class="ul-footer-widget ul-nwsltr-widget">
                     <h3 class="ul-footer-widget-title">S'abonner à notre newsletter</h3>
-                    <form action="{{ route('newsletter.store') }}" method="POST" class="ul-nwsltr-form">
+                    <form action="{{ route('newsletter.store') }}" method="POST" class="ul-nwsltr-form" onsubmit="return validateNewsletterForm()">
                         @csrf
                         @if(session('success'))
                             <div class="alert alert-success">
@@ -127,18 +129,19 @@
                         @endif
                         
                         <div class="top">
-                            <input type="email" name="email" id="nwsltr-email" placeholder="Votre adresse email" class="ul-nwsltr-input">
+                            <input type="email" name="email" id="nwsltr-email" placeholder="Votre adresse email" class="ul-nwsltr-input" required>
                             <button type="submit"><i class="flaticon-next"></i></button>
                         </div>
 
                         <div class="agreement">
                             <label for="nwsltr-agreement" class="ul-checkbox-wrapper">
-                                <input type="checkbox" name="agreement" id="nwsltr-agreement" hidden>
-                                <span class="ul-checkbox"><i class="flaticon-tick"></i></span>
-                                <span class="ul-checkbox-txt">Je suis d'accord avec la <a href="#">Politique de confidentialité</a></span>
+                                <input type="checkbox" name="agreement" id="nwsltr-agreement" required>
+                                <span class="ul-checkbox-txt">Je suis d'accord avec la <a href="/politique-de-confifentialite">Politique de confidentialité</a></span>
                             </label>
                         </div>
                     </form>
+
+                    
                 </div>
             </div>
         </div>
@@ -149,7 +152,7 @@
         <div class="ul-footer-container">
             <div class="ul-footer-bottom-wrapper">
                 <p class="copyright-txt">&copy; {{ date('Y') }} {{ $settings->site_name}} by <a href="https://www.xtopdigital.com" target="_blank">XTOP DIGITAL</a>. Tous droits réservés</p>
-                <div class="ul-footer-bottom-nav"><a href="{{ route('about') }}">Mentions légales</a></div>
+                <div class="ul-footer-bottom-nav"><a href="/mentions-legales">Mentions légales</a></div>
             </div>
         </div>
     </div>
@@ -160,3 +163,13 @@
     </div>
 </footer>
 <!-- FOOTER SECTION END -->
+<script>
+    function validateNewsletterForm() {
+        const checkbox = document.getElementById('nwsltr-agreement');
+        if (!checkbox.checked) {
+            alert('Veuillez accepter la politique de confidentialité avant de soumettre.');
+            return false;
+        }
+        return true;
+    }
+</script>

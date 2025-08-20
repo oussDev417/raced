@@ -51,12 +51,67 @@
                             @if(isset($settings) && $settings->bank_number)
                                 <span> N° {{ $settings->bank_number }}</span>
                             @endif
-                                
                             </div>
                             <p>Votre participation, aussi modeste soit-elle, constitue le meilleur soutien pour la poursuite de nos projets.</p>
                             <p>Vous bénéficiez d'une déduction fiscale à partir de 40 euros de dons par an. Une attestation fiscale vous sera envoyée dès votre premier trimestre suivant l'année de votre don/vos dons.</p>
                         </div>
                     </div>
+
+                    <!-- Mobile Money Section -->
+                    <div class="ul-mobile-money-section">
+                        <h3 class="ul-section-title text-center mb-4">Dons via Mobile Money</h3>
+                        <div class="row">
+                            @if(isset($settings) && $settings->momo_number)
+                            <div class="col-md-4 mb-4">
+                                <div class="ul-mobile-money-card">
+                                    <div class="ul-mobile-money-icon">
+                                        <img src="images/MOMO.png" alt="Momo" onerror="this.src='https://placehold.co/100x100?text=Momo'">
+                                    </div>
+                                    <div class="ul-mobile-money-number">
+                                        {{ $settings->momo_number }}
+                                    </div>
+                                    <div class="ul-mobile-money-label">
+                                        MTN Mobile Money
+                                    </div>
+                                </div>
+                            </div>
+                            @endif
+                            
+                            @if(isset($settings) && $settings->moov_number)
+                            <div class="col-md-4 mb-4">
+                                <div class="ul-mobile-money-card">
+                                    <div class="ul-mobile-money-icon">
+                                        <img src="images/Moov.png" alt="Moov" onerror="this.src='https://placehold.co/100x100?text=Moov'">
+                                    </div>
+                                    <div class="ul-mobile-money-number">
+                                        {{ $settings->moov_number }}
+                                    </div>
+                                    <div class="ul-mobile-money-label">
+                                        Moov Money
+                                    </div>
+                                </div>
+                            </div>
+                            @endif
+                            
+                            @if(isset($settings) && $settings->cetiis_number)
+                            <div class="col-md-4 mb-4">
+                                <div class="ul-mobile-money-card">
+                                    <div class="ul-mobile-money-icon">
+                                        <img src="images/CELTIIS.png" alt="Cetiis" onerror="this.src='https://placehold.co/100x100?text=Cetiis'">
+                                    </div>
+                                    <div class="ul-mobile-money-number">
+                                        {{ $settings->cetiis_number }}
+                                    </div>
+                                    <div class="ul-mobile-money-label">
+                                        Cetiis Cash
+                                    </div>
+                                </div>
+                            </div>
+                            @endif
+                        </div>
+                    </div>
+
+                    
 
                     <!-- Option 2 -->
                     <div class="ul-donation-option">
@@ -287,6 +342,61 @@
 .ul-impact-card-text {
     color: var(--ul-p);
     margin-bottom: 0;
+}
+
+
+/* Mobile Money Section Styles */
+.ul-mobile-money-section {
+   
+    border-radius: 20px;
+    padding: clamp(20px, 2.1vw, 40px);
+    margin: clamp(20px, 2.1vw, 40px) 0;
+}
+
+.ul-mobile-money-card {
+    background-color: var(--white);
+    border-radius: 20px;
+    padding: clamp(20px, 2.1vw, 40px);
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.ul-mobile-money-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.ul-mobile-money-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 15px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+}
+
+.ul-mobile-money-icon img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+.ul-mobile-money-number {
+    font-size: clamp(16px, 1.05vw, 20px);
+    font-weight: 700;
+    color: var(--ul-primary);
+    margin: 10px 0;
+    word-break: break-all;
+}
+
+.ul-mobile-money-label {
+    font-size: clamp(14px, 0.95vw, 18px);
+    color: var(--ul-p);
+    margin-top: 5px;
 }
 </style>
 

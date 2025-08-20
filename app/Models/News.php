@@ -17,6 +17,7 @@ class News extends Model
         'slug',
         'short_description',
         'description',
+        'published_at',
     ];
 
     public function category(): BelongsTo

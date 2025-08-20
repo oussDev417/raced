@@ -88,6 +88,16 @@
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
+
+                        <div class="mb-3">
+                            <label for="published_at" class="form-label">Date de publication <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control flatpickr @error('published_at') is-invalid @enderror" 
+                                   id="published_at" name="published_at" value="{{ old('published_at', $news->published_at ? (\Carbon\Carbon::parse($news->published_at)->format('Y-m-d H:i')) : now()->format('Y-m-d H:i')) }}" required>
+                            @error('published_at')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                            <small class="form-text text-muted">Sélectionnez la date et l'heure de publication.</small>
+                        </div>
                     </div>
 
                     <div class="col-md-4">
@@ -214,6 +224,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     regenerateButton.addEventListener('click', function() {
         slugInput.value = generateSlug(titleInput.value);
+    });
+
+    flatpickr('.flatpickr', {
+        enableTime: true, // Activer la sélection de l'heure
+        dateFormat: 'Y-m-d H:i', // Format de la date
+        locale: 'fr', // Localisation en français
+        minDate: 'today', // Empêcher la sélection d'une date passée
+        defaultDate: '{{ old('published_at', now()->format('Y-m-d H:i')) }}', // Date par défaut
     });
 });
 </script>

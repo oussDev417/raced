@@ -23,6 +23,9 @@
     <!-- Toastr CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+    
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ asset('assets/admin/css/style.css') }}">
     
@@ -396,12 +399,13 @@
     <!-- Toastr JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/fr.js"></script>
+    
     <!-- Custom JS -->
     <script src="{{ asset('assets/admin/js/script.js') }}"></script>
-    
-    <!-- Additional JS -->
-    @stack('scripts')
 
+    <!-- Quill Editor Configuration -->
     <script>
         // Configuration globale de Quill
         function initQuillEditor(selector, placeholder = '') {
@@ -476,6 +480,19 @@
                     }
                 });
 
+                // Configurer le gestionnaire de formulaire
+                const form = container.closest('form');
+                if (form) {
+                    const inputId = container.id.replace('_editor', '_input');
+                    const hiddenInput = document.getElementById(inputId);
+                    
+                    if (hiddenInput) {
+                        form.addEventListener('submit', function() {
+                            hiddenInput.value = editor.root.innerHTML;
+                        });
+                    }
+                }
+
                 console.log(`Editor initialized for ${selector} with toolbar`);
                 resolve(editor);
             });
@@ -484,26 +501,72 @@
         // Initialisation après le chargement complet de la page
         window.addEventListener('load', function() {
             console.log('Window loaded, initializing editors...');
-            const editors = [
-                { selector: '#description_editor', placeholder: 'Entrez la description détaillée...' },
-                { selector: '#mission_editor', placeholder: 'Entrez la mission...' },
-                { selector: '#vision_editor', placeholder: 'Entrez la vision...' },
-                { selector: '#values_editor', placeholder: 'Entrez les valeurs...' }
-            ];
-
-            Promise.all(editors.map(editor => 
-                initQuillEditor(editor.selector, editor.placeholder)
-            )).then(quillEditors => {
-                console.log('All editors initialized successfully');
-                // Configurer les gestionnaires de formulaire
-                document.getElementById('aboutForm')?.addEventListener('submit', function(e) {
-                    quillEditors.forEach((editor, index) => {
-                        const inputId = editors[index].selector.replace('_editor', '_input');
-                        document.querySelector(inputId).value = editor.root.innerHTML;
+            
+            // Trouver tous les conteneurs d'éditeur Quill sur la page
+            const editorContainers = document.querySelectorAll('[id$="_editor"]');
+            
+            // Initialiser chaque éditeur trouvé
+            editorContainers.forEach(container => {
+                const editorId = `#${container.id}`;
+                const placeholder = container.getAttribute('data-placeholder') || 'Commencez à écrire...';
+                
+                initQuillEditor(editorId, placeholder)
+                    .then(editor => {
+                        console.log(`Editor ${editorId} initialized successfully`);
+                    })
+                    .catch(error => {
+                        console.error(`Error initializing editor ${editorId}:`, error);
                     });
-                });
-            }).catch(error => {
-                console.error('Error initializing editors:', error);
+            });
+        });
+    </script>
+    
+    <!-- Additional JS -->
+    @stack('scripts')
+
+    <!-- Slug Generator Script -->
+    <script>
+        $(document).ready(function() {
+            function generateSlug(text) {
+                return text
+                    .toString()
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '')
+                    .toLowerCase()
+                    .trim()
+                    .replace(/\s+/g, '-')
+                    .replace(/[^\w-]+/g, '')
+                    .replace(/--+/g, '-');
+            }
+
+            // Chercher tous les formulaires avec des champs de slug
+            $('form').each(function() {
+                const form = $(this);
+                const titleInput = form.find('input[name="title"]');
+                const slugInput = form.find('input[name="slug"]');
+                const regenerateButton = form.find('#regenerateSlug');
+
+                if (titleInput.length && slugInput.length) {
+                    titleInput.on('input', function() {
+                        if (!slugInput.val() || slugInput.val() === generateSlug(titleInput.val().trim())) {
+                            slugInput.val(generateSlug($(this).val()));
+                        }
+                    });
+
+                    if (regenerateButton.length) {
+                        regenerateButton.on('click', function(e) {
+                            e.preventDefault();
+                            slugInput.val(generateSlug(titleInput.val()));
+                        });
+                    }
+                }
+            });
+            
+            flatpickr('.flatpickr', {
+                enableTime: true, // Activer la sélection de l'heure
+                dateFormat: 'Y-m-d H:i', // Format de la date
+                locale: 'fr', // Localisation en français
+                defaultDate: '{{ old('published_at', now()->format('Y-m-d H:i')) }}', // Date par défaut
             });
         });
     </script>

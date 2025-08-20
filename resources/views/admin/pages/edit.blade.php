@@ -33,7 +33,7 @@
                     </div>
                 @endif
 
-                <form action="{{ route('admin.pages.update', $page) }}" method="POST">
+                <form action="{{ route('admin.pages.update', $page) }}" method="POST" enctype="multipart/form-data" id="contentForm">
                     @csrf
                     @method('PUT')
                     <div class="row">
@@ -57,7 +57,10 @@
 
                                     <div class="form-group mb-3">
                                         <label for="content" class="form-label">Contenu</label>
-                                        <textarea class="form-control" id="content" name="content" rows="5">{{ old('content', $page->content) }}</textarea>
+                                        <div class="editor-container">
+                                            <div id="content-editor">{!! old('content', $page->content) !!}</div>
+                                            <input type="hidden" id="content" name="content" value="{{ old('content', $page->content) }}">
+                                        </div>
                                         <small class="text-muted">Ce contenu sera affiché si aucune section n'est ajoutée à la page.</small>
                                     </div>
                                 </div>
@@ -158,6 +161,27 @@
 
 @push('scripts')
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        initQuillEditor('#content-editor', 'Entrez le contenu de la page ici...')
+            .then(editor => {
+                // Récupérer le contenu HTML lorsque le formulaire est soumis
+                document.getElementById('contentForm').addEventListener('submit', function() {
+                    const contentInput = document.getElementById('content');
+                    contentInput.value = editor.root.innerHTML;
+                    console.log('Contenu envoyé :', contentInput.value);
+                });
+                
+                // Si des données existent déjà, les charger dans l'éditeur
+                const initialContent = document.getElementById('content').value;
+                if (initialContent) {
+                    editor.root.innerHTML = initialContent;
+                }
+            })
+            .catch(error => {
+                console.error('Erreur lors de l\'initialisation de l\'éditeur Quill :', error);
+            });
+    });
+
     // Générer automatiquement le slug à partir du titre
     document.getElementById('title').addEventListener('input', function() {
         const title = this.value;
@@ -175,14 +199,5 @@
     document.getElementById('slug').addEventListener('input', function() {
         document.getElementById('slug-preview').textContent = this.value;
     });
-
-    // Initialiser l'éditeur WYSIWYG si disponible
-    if (typeof ClassicEditor !== 'undefined') {
-        ClassicEditor
-            .create(document.querySelector('#content'))
-            .catch(error => {
-                console.error(error);
-            });
-    }
 </script>
 @endpush 

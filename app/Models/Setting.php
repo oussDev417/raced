@@ -36,6 +36,10 @@ class Setting extends Model
         'meta_description',
         'meta_keywords',
         'google_analytics',
+        'momo_number',
+        'moov_number',
+        'cetiis_number',
+        'mail_link',
     ];
 
     /**
@@ -52,6 +56,10 @@ class Setting extends Model
                 'site_name' => 'Mon Site',
                 'site_slogan' => 'Une description de mon site',
                 'footer_text' => '© ' . date('Y') . ' - Tous droits réservés',
+                'momo_number' => '',
+                'moov_number' => '',
+                'cetiis_number' => '',
+                'mail_link' => '',
             ]);
         }
         

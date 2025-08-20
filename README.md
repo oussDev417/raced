@@ -1,66 +1,123 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# RACED ONG - Plateforme Web Laravel
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Bienvenue sur la plateforme web de l'ONG RACED, développée avec Laravel. Ce projet propose un site web dynamique pour la gestion de contenus institutionnels, d'actualités, de rapports, d'équipe, de galerie, de partenaires, de témoignages, de statistiques, et bien plus encore.
 
-## About Laravel
+## Présentation du projet
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Cette application permet à une ONG ou une association de :
+- Présenter ses missions, valeurs, équipe, axes d'intervention, partenaires, etc.
+- Publier des actualités, des rapports, des projets, des témoignages.
+- Gérer dynamiquement les pages, les sections, les menus, la galerie photo.
+- Administrer l'ensemble du contenu via une interface d'administration sécurisée.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Fonctionnalités principales
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Gestion des pages dynamiques** (création, édition, sections personnalisées)
+- **Actualités** (catégories, publication programmée, éditeur riche)
+- **Rapports** (catégories, téléchargement PDF, affichage par catégorie)
+- **Galerie d'images** (catégories, upload, affichage frontend)
+- **Équipe & membres** (catégories, fiches membres)
+- **Partenaires, témoignages, statistiques**
+- **Paramètres du site** (coordonnées, réseaux sociaux, numéros MOMO/MOOV/CELTIIS, mail, etc.)
+- **Gestion des menus dynamiques**
+- **Newsletter, contact, bénévolat**
+- **Interface d'administration complète**
+- **Frontend moderne et responsive**
 
-## Learning Laravel
+## Prérequis
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- PHP >= 8.1
+- Composer
+- Node.js & npm
+- MySQL/MariaDB ou autre SGBD compatible
+- [Optionnel] Redis/Memcached pour le cache
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Installation
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+1. **Cloner le dépôt**
+   ```bash
+   git clone <url-du-repo> raced
+   cd raced
+   ```
 
-## Laravel Sponsors
+2. **Installer les dépendances PHP**
+   ```bash
+   composer install
+   ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+3. **Installer les dépendances front-end**
+   ```bash
+   npm install
+   npm run build # ou npm run dev pour le développement
+   ```
 
-### Premium Partners
+4. **Configurer l'environnement**
+   - Copier le fichier `.env.example` en `.env` :
+     ```bash
+     cp .env.example .env
+     ```
+   - Modifier les variables d'environnement (`DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`, etc.)
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+5. **Générer la clé d'application**
+   ```bash
+   php artisan key:generate
+   ```
 
-## Contributing
+6. **Lancer les migrations et les seeders**
+   ```bash
+   php artisan migrate --seed
+   ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+7. **Créer le lien de stockage pour les fichiers uploadés**
+   ```bash
+   php artisan storage:link
+   ```
 
-## Code of Conduct
+8. **Démarrer le serveur de développement**
+   ```bash
+   php artisan serve
+   ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Utilisation
 
-## Security Vulnerabilities
+- **Accès à l'administration** :
+  - URL : `/admin`
+  - Identifiants par défaut : voir le seeder ou créer un utilisateur via artisan
+- **Accès au site public** :
+  - URL : `/`
+- **Gestion des modules** :
+  - Pages, actualités, rapports, galerie, équipe, partenaires, etc. via le menu admin
+- **Paramètres du site** :
+  - Menu "Paramètres" pour configurer les coordonnées, réseaux sociaux, numéros MOMO/MOOV/CELTIIS, mail, etc.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Personnalisation
 
-## License
+- **Ajout de sections dynamiques** : via l'admin, menu "Sections" ou "Pages"
+- **Modification des menus** : via l'admin, menu "Menus"
+- **Ajout de catégories** : pour actualités, rapports, équipe, galerie, etc.
+- **Configuration des couleurs, logos, images** : via "Paramètres" ou en remplaçant les fichiers dans `public/assets/images/`
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Déploiement
+
+- **Configurer `.env` pour la production** (cache, mail, base de données, etc.)
+- **Compiler les assets** :
+  ```bash
+  npm run build
+  ```
+- **Optimiser le cache** :
+  ```bash
+  php artisan config:cache
+  php artisan route:cache
+  php artisan view:cache
+  ```
+- **Sécuriser le dossier `storage` et les permissions**
+
+## Support & Contribution
+
+- Pour toute question ou bug, ouvrez une issue sur le dépôt GitHub.
+- Les contributions sont les bienvenues !
+- Merci de respecter le code de conduite du projet.
+
+## Licence
+
+Ce projet est open-source sous licence MIT.

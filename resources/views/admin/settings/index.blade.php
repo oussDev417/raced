@@ -125,6 +125,36 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="momo_number">Numéro MOMO</label>
+                                    <input type="text" name="momo_number" class="form-control" value="{{ $settings->momo_number }}">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="moov_number">Numéro MOOV</label>
+                                    <input type="text" name="moov_number" class="form-control" value="{{ $settings->moov_number }}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="cetiis_number">Numéro Cetiis</label>
+                                    <input type="text" name="cetiis_number" class="form-control" value="{{ $settings->cetiis_number }}">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="mail_link">Lien Mail</label>
+                                    <input type="text" name="mail_link" class="form-control" value="{{ $settings->mail_link }}">
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     <!-- Onglet Contact -->

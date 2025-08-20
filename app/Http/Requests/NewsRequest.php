@@ -29,6 +29,7 @@ class NewsRequest extends FormRequest
             'slug' => ['required', 'string', 'max:255', Rule::unique('news')->ignore($this->news)],
             'short_description' => ['required', 'string'],
             'description' => ['required', 'string'],
+            'published_at' => ['required', 'date'],
         ];
     }
 
@@ -52,6 +53,8 @@ class NewsRequest extends FormRequest
             'short_description.string' => 'La description courte doit être une chaîne de caractères',
             'description.required' => 'La description est requise',
             'description.string' => 'La description doit être une chaîne de caractères',
+            'published_at.required' => 'La date de publication est requise',
+            'published_at.date' => 'La date de publication doit être une date valide',
         ];
     }
 }

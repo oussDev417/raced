@@ -53,6 +53,10 @@ class SettingController extends Controller
             'meta_description' => 'nullable|string|max:160',
             'meta_keywords' => 'nullable|string|max:255',
             'google_analytics' => 'nullable|string',
+            'momo_number' => 'nullable|string',
+            'moov_number' => 'nullable|string',
+            'cetiis_number' => 'nullable|string',
+            'mail_link' => 'nullable|string',
         ]);
         
         // Traitement du logo

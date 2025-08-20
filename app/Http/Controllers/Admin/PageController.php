@@ -41,6 +41,7 @@ class PageController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'slug' => 'nullable|string|max:255|unique:pages',
+            'content' => 'nullable|string',
             'meta_description' => 'nullable|string',
             'meta_keywords' => 'nullable|string',
             'template' => 'required|string',
@@ -96,11 +97,14 @@ class PageController extends Controller
      */
     public function update(Request $request, Page $page)
     {
+        \Log::info('Request data:', $request->all()); // Log des données reçues
+
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'slug' => 'required|string|max:255|unique:pages,slug,' . $page->id,
             'meta_description' => 'nullable|string',
             'meta_keywords' => 'nullable|string',
+            'content' => 'nullable|string',
             'template' => 'required|string',
             'status' => 'required|in:published,draft',
             'is_home' => 'boolean',
